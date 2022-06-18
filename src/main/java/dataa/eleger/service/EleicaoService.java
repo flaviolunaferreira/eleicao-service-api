@@ -18,11 +18,11 @@ public interface EleicaoService {
 
     List<EleicaoDtoResposta> listarTodasEleicoes(int pagina, int itens);
 
-    FichaCompletaEleicaoDtoResposta procurarEleicaoPorId(Long id) throws NotFound;
+    FichaCompletaEleicaoDtoResposta procurarEleicaoPorId(Long id);
 
     List<EleicaoDtoResposta> listaEleicaoPorNome(String nome);
 
-    FichaCompletaEleicaoDtoResposta atualizarrEleicao(EleicaoDtoRequisicao eleicaoDtoRequisicao, Long id);
+    FichaCompletaEleicaoDtoResposta atualizarEleicao(EleicaoDtoRequisicao eleicaoDtoRequisicao, Long id);
 
     void apagaEleicao(Long id) throws IntegratyViolation;
 }
