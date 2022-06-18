@@ -53,7 +53,8 @@ public class EleicaoControle {
      * @param itens
      * @return retorna as eleições gravadas por página
      ***********************************************************************************/
-    @ApiOperation(value = "Listar todas", notes = "Lista todas as eleições cadastradas ordenada por data")
+    @ApiOperation(value = "Listar todas", notes = "Lista todas as eleições cadastradas ordenada por id." +
+            "Lembrando que a primeira página é a 0.")
     @GetMapping("/pagina/{pagina}/itens/{itens}")
     public ResponseEntity<List<EleicaoDtoResposta>> listarTodasEleicoes(@PathVariable int pagina,
                                                                         @PathVariable int itens) {
@@ -70,8 +71,8 @@ public class EleicaoControle {
      ***********************************************************************************/
     @ApiOperation(value = "Lista eleição por Id", notes = "Ficha completa da eleição filtrada pelo id")
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<FichaCompletaEleicaoDtoResposta>> procurarEleicaoPorId(@PathVariable Integer id) throws NotFound {
-        Optional<FichaCompletaEleicaoDtoResposta> result = eleicaoService.procurarEleicaoPorId(id);
+    public ResponseEntity<FichaCompletaEleicaoDtoResposta> procurarEleicaoPorId(@PathVariable Long id) throws NotFound {
+        FichaCompletaEleicaoDtoResposta result = eleicaoService.procurarEleicaoPorId(id);
         return ResponseEntity.ok().body(result);
     }
 
