@@ -20,14 +20,14 @@ public class EleicaoEntidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String nome;
     private LocalDate inicio;
     private LocalDate fim;
-    private String criadoPor;
-    private LocalDateTime criadoData;
-    private String modificadoPor;
-    private LocalDateTime modificadoData;
+    private String criadoPor = System.getProperty("user.name");
+    private LocalDateTime criadoData = LocalDateTime.now();
+    private String modificadoPor = System.getProperty("user.name");
+    private LocalDateTime modificadoData = LocalDateTime.now();
 
 
     public EleicaoEntidade(String nome, LocalDate inicio, LocalDate fim) {
