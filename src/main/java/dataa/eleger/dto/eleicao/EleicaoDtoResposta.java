@@ -15,6 +15,4 @@ public class EleicaoDtoResposta {
     private LocalDate inicio;
     private LocalDate fim;
 
-
-
 }
