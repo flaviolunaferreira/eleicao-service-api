@@ -1,5 +1,6 @@
 package dataa.eleger.dto.eleicao;
 
+import dataa.eleger.entidades.EleicaoEntidade;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,4 +16,9 @@ public class EleicaoDtoResposta {
     private LocalDate inicio;
     private LocalDate fim;
 
+    public EleicaoDtoResposta(EleicaoEntidade eleicaoEntidade) {
+        this.setNome(eleicaoEntidade.getNome());
+        this.setInicio(eleicaoEntidade.getInicio());
+        this.setFim(eleicaoEntidade.getFim());
+    }
 }
