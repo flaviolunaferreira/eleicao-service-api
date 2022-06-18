@@ -13,11 +13,12 @@ import java.util.Optional;
 
 @Service
 public interface EleicaoService {
+
     EleicaoEntidade novaEleicao(EleicaoDtoRequisicao eleicaoDtoRequisicao);
 
     List<EleicaoDtoResposta> listarTodasEleicoes(int pagina, int itens);
 
-    Optional<FichaCompletaEleicaoDtoResposta> procurarEleicaoPorId(Integer id) throws NotFound;
+    FichaCompletaEleicaoDtoResposta procurarEleicaoPorId(Long id) throws NotFound;
 
     List<EleicaoDtoResposta> listaEleicaoPorNome(String nome);
 
