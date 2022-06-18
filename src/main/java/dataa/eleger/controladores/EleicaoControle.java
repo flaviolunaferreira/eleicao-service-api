@@ -8,7 +8,6 @@ import dataa.eleger.dto.eleicao.EleicaoDtoResposta;
 import dataa.eleger.entidades.EleicaoEntidade;
 import dataa.eleger.service.EleicaoService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/eleicao")
@@ -71,7 +69,7 @@ public class EleicaoControle {
      ***********************************************************************************/
     @ApiOperation(value = "Lista eleição por Id", notes = "Ficha completa da eleição filtrada pelo id")
     @GetMapping("/{id}")
-    public ResponseEntity<FichaCompletaEleicaoDtoResposta> procurarEleicaoPorId(@PathVariable Long id) throws NotFound {
+    public ResponseEntity<FichaCompletaEleicaoDtoResposta> procurarEleicaoPorId(@PathVariable Long id) {
         FichaCompletaEleicaoDtoResposta result = eleicaoService.procurarEleicaoPorId(id);
         return ResponseEntity.ok().body(result);
     }
@@ -91,16 +89,32 @@ public class EleicaoControle {
     }
 
 
+    /**********************************************************************************
+     * Altera um registro eleição já gravado.
+     * @param eleicaoDtoRequisicao
+     * @param id
+     * @return ficha completa da eleição alterada
+     *********************************************************************************/
     @ApiOperation(value = "atualiza cadastro de eleiçoes.", notes = "Atualiza o cadastro da eleiçao.")
     @PutMapping("/{id}")
     public ResponseEntity<FichaCompletaEleicaoDtoResposta> atualizarEleicao(
             @Validated @RequestBody EleicaoDtoRequisicao eleicaoDtoRequisicao, @PathVariable Long id) {
-        FichaCompletaEleicaoDtoResposta result = eleicaoService.atualizarrEleicao(eleicaoDtoRequisicao, id);
-        return ResponseEntity.status(HttpStatus.UPGRADE_REQUIRED).body(result);
+        FichaCompletaEleicaoDtoResposta result = eleicaoService.atualizarEleicao(eleicaoDtoRequisicao, id);
+        return ResponseEntity.ok().body(result);
     }
 
+    /**********************************************************************************
+     * Apaga um registro definitivamento do banco de dados
+     * @param id
+     * @return NotContent
+     * @throws IntegratyViolation
+     *********************************************************************************/
     public ResponseEntity<?> apagaEleicao(@PathVariable Long id) throws IntegratyViolation {
+
+        // atrribuindo responsabilidade para outra classe
         eleicaoService.apagaEleicao(id);
+
+        // retornando estatus que o registro foi apagado
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
