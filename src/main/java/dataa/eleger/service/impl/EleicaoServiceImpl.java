@@ -1,6 +1,6 @@
 package dataa.eleger.service.impl;
 
-import dataa.eleger.dto.EleicaoDtoRequisicao;
+import dataa.eleger.dto.eleicao.EleicaoDtoRequisicao;
 import dataa.eleger.entidades.EleicaoEntidade;
 import dataa.eleger.service.EleicaoService;
 import org.springframework.stereotype.Service;
