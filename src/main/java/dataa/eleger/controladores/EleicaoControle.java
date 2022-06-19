@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,9 +39,10 @@ public class EleicaoControle {
      ***********************************************************************************/
     @ApiOperation(value = "Cadastra uma nova eleição", notes = "inclui uma nova eleição no banco de dados")
     @PostMapping("/")
-    public ResponseEntity<EleicaoEntidade> novaEleicao(@Validated @RequestBody EleicaoDtoRequisicao eleicaoDtoRequisicao) {
-        EleicaoEntidade result = eleicaoService.novaEleicao(eleicaoDtoRequisicao);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    public ResponseEntity<EleicaoEntidade> novaEleicao(@RequestBody @Validated EleicaoDtoRequisicao eleicaoDtoRequisicao) {
+
+        // usando a classe dto para mapear a resposta do método.
+        return new ResponseEntity<>(eleicaoService.novaEleicao(eleicaoDtoRequisicao), HttpStatus.CREATED);
     }
 
 
@@ -98,9 +100,9 @@ public class EleicaoControle {
     @ApiOperation(value = "atualiza cadastro de eleiçoes.", notes = "Atualiza o cadastro da eleiçao.")
     @PutMapping("/{id}")
     public ResponseEntity<FichaCompletaEleicaoDtoResposta> atualizarEleicao(
-            @Validated @RequestBody EleicaoDtoRequisicao eleicaoDtoRequisicao, @PathVariable Long id) {
-        FichaCompletaEleicaoDtoResposta result = eleicaoService.atualizarEleicao(eleicaoDtoRequisicao, id);
-        return ResponseEntity.ok().body(result);
+            @RequestBody @Valid EleicaoDtoRequisicao eleicaoDtoRequisicao, @PathVariable Long id) {
+
+        return new ResponseEntity<>(eleicaoService.atualizarEleicao(eleicaoDtoRequisicao, id), HttpStatus.ACCEPTED);
     }
 
     /**********************************************************************************
@@ -109,6 +111,8 @@ public class EleicaoControle {
      * @return NotContent
      * @throws IntegratyViolation
      *********************************************************************************/
+    @ApiOperation(value = "Apagar Eleiçao", notes = "Apaga uma eleiçao do cadastro se nao tiver tabelas filhas")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> apagaEleicao(@PathVariable Long id) throws IntegratyViolation {
 
         // atrribuindo responsabilidade para outra classe

@@ -3,10 +3,7 @@ package dataa.eleger.entidades;
 import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -21,9 +18,16 @@ public class EleicaoEntidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private LocalDate inicio;
+
+    @Column(nullable = false)
     private LocalDate fim;
+    
     private String criadoPor = System.getProperty("user.name");
     private LocalDateTime criadoData = LocalDateTime.now();
     private String modificadoPor = System.getProperty("user.name");
