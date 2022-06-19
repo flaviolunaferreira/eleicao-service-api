@@ -62,7 +62,8 @@ public class EleicaoServiceImpl implements EleicaoService {
     @Override
     public List<EleicaoDtoResposta> listarTodasEleicoes(int pagina, int itens) {
 
-        // se o front mandar mais de 50 itens vou definir o valor máximo para 50
+        // se o front mandar mais de 50 itens por página vou definir o valor máximo para 50
+        // evitando um volume alto de deley de tráfigo.
         if (itens > 50) itens = 50;
 
         // definindo a pagina e quantidade de itens da resposta
@@ -72,9 +73,8 @@ public class EleicaoServiceImpl implements EleicaoService {
         Page<EleicaoEntidade> result = eleicaoRepositorio.findAll(page);
 
         // mapeando informações usando o método de classe
-        List<EleicaoDtoResposta> resposta = result.stream().map(EleicaoDtoResposta::new).collect(Collectors.toList());
+        return result.stream().map(EleicaoDtoResposta::new).collect(Collectors.toList());
 
-        return resposta;
     }
 
 

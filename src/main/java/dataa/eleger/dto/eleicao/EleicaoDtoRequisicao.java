@@ -4,6 +4,8 @@ package dataa.eleger.dto.eleicao;
 import dataa.eleger.entidades.EleicaoEntidade;
 import lombok.*;
 
+
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Setter
@@ -14,7 +16,9 @@ import java.time.LocalDate;
 public class EleicaoDtoRequisicao {
 
     private String nome;
+
     private LocalDate inicio;
+
     private LocalDate fim;
 
     public EleicaoEntidade novaEleicao() {
