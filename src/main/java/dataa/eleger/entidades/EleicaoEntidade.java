@@ -1,11 +1,11 @@
 package dataa.eleger.entidades;
 
 import lombok.*;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -27,6 +27,10 @@ public class EleicaoEntidade {
 
     @Column(nullable = false)
     private LocalDate fim;
+
+    @OneToMany
+    @JoinColumn(name = "idCandidato")
+    private List<CandidatoEntidade> candidato;
     
     private String criadoPor = System.getProperty("user.name");
     private LocalDateTime criadoData = LocalDateTime.now();
