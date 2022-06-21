@@ -2,6 +2,7 @@ package dataa.eleger.service.impl;
 
 import dataa.eleger.Exceptions.IntegratyViolation;
 import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.cargo.CargoDtoRequisicao;
 import dataa.eleger.dto.cargo.CargoDtoResposta;
 import dataa.eleger.entidades.CargoEntidade;
@@ -31,9 +32,10 @@ public class CargoServiceImpl implements CargoService {
      * @return
      */
     @Override
-    public CargoDtoResposta novoCargo(CargoDtoRequisicao cargoDtoRequisicao) {
-        CargoEntidade resultado = cargoDtoRequisicao.novoCargo();
-        return new CargoDtoResposta(cargoRepositorio.save(resultado));
+    public CargoDtoResposta novoCargo(CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado {
+        CargoEntidade procurarNome = cargoRepositorio.findByNomeCargo(cargoDtoRequisicao.getNomeCargo());
+        if (procurarNome == null) return new CargoDtoResposta(cargoRepositorio.save(cargoDtoRequisicao.novoCargo()));
+        throw new ValorDuplicado();
     }
 
     /**
@@ -94,7 +96,7 @@ public class CargoServiceImpl implements CargoService {
         try {
             cargoRepositorio.deleteById(resultado.getIdCargo());
         } catch(Exception e) {
-            new IntegratyViolation("Erro de integridade relacional -> ", e);
+            throw new IntegratyViolation("Erro de integridade relacional -> ", e);
         }
     }
 

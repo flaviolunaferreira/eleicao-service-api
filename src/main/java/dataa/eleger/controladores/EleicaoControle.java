@@ -105,6 +105,15 @@ public class EleicaoControle {
         return new ResponseEntity<>(eleicaoService.atualizarEleicao(eleicaoDtoRequisicao, id), HttpStatus.ACCEPTED);
     }
 
+    @ApiOperation(value = "Inclui um candidato", notes = "Inclui um Candidato no cadastro da eleição.")
+    @PutMapping("/eleicao/{eleicao}/candidato/{candidato}")
+    public ResponseEntity<FichaCompletaEleicaoDtoResposta> incluirCandidato(
+            @PathVariable Long eleicao, @PathVariable Long candidato) {
+        FichaCompletaEleicaoDtoResposta resultado = eleicaoService.cadastraCandidato(eleicao, candidato);
+        return ResponseEntity.ok().body(resultado);
+    }
+
+
     /**********************************************************************************
      * Apaga um registro definitivamento do banco de dados
      * @param id
@@ -121,6 +130,7 @@ public class EleicaoControle {
         // retornando estatus que o registro foi apagado
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 
 
 }

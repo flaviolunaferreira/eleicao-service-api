@@ -5,8 +5,10 @@ import dataa.eleger.Exceptions.NotFound;
 import dataa.eleger.dto.eleicao.EleicaoDtoRequisicao;
 import dataa.eleger.dto.eleicao.EleicaoDtoResposta;
 import dataa.eleger.dto.eleicao.FichaCompletaEleicaoDtoResposta;
+import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.EleicaoEntidade;
 import dataa.eleger.repositorios.EleicaoRepositorio;
+import dataa.eleger.service.CandidatoService;
 import dataa.eleger.service.EleicaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,11 +31,13 @@ public class EleicaoServiceImpl implements EleicaoService {
 
     // criando uma nova instancia do repositorio
     private final EleicaoRepositorio eleicaoRepositorio;
+    private final CandidatoService candidatoService;
 
     // injetando dependencia
     @Autowired
-    public EleicaoServiceImpl(EleicaoRepositorio eleicaoRepositorio) {
+    public EleicaoServiceImpl(EleicaoRepositorio eleicaoRepositorio, CandidatoService candidatoService) {
         this.eleicaoRepositorio = eleicaoRepositorio;
+        this.candidatoService = candidatoService;
     }
 
 
@@ -63,7 +67,7 @@ public class EleicaoServiceImpl implements EleicaoService {
     public List<EleicaoDtoResposta> listarTodasEleicoes(int pagina, int itens) {
 
         // se o front mandar mais de 50 itens por página vou definir o valor máximo para 50
-        // evitando um volume alto de deley de tráfigo.
+        // evitando um volume alto de delay de tráfigo.
         if (itens > 50) itens = 50;
 
         // definindo a pagina e quantidade de itens da resposta
@@ -118,7 +122,7 @@ public class EleicaoServiceImpl implements EleicaoService {
     public FichaCompletaEleicaoDtoResposta atualizarEleicao(EleicaoDtoRequisicao eleicaoDtoRequisicao, Long id) {
         // procurando eleição
        EleicaoEntidade resposta = buscaPorId(id);
-       // atribuindo novos valores -> as chaves são desnecessária mas fica mais visíveel.
+       // atribuindo novos valores -> as chaves são desnecessária mas fica mais visível.
         {
             resposta.setNome(eleicaoDtoRequisicao.getNome());
             resposta.setInicio(eleicaoDtoRequisicao.getInicio());
@@ -132,7 +136,7 @@ public class EleicaoServiceImpl implements EleicaoService {
 
 
     /**************************************************************************
-     * Apaga um registro definiticamente do banco de dados, se nao tiver relacionamentos pendentes
+     * Apaga um registro definitivamente do banco de dados, se nao tiver relacionamentos pendentes.
      * @param id
      * @throws IntegratyViolation
      *************************************************************************/
@@ -147,9 +151,28 @@ public class EleicaoServiceImpl implements EleicaoService {
             eleicaoRepositorio.deleteById(id);
         // caso tenha algum registro filho ele lança uma excceção
         } catch (IntegratyViolation e) {
-            new IntegratyViolation("Erro de integridade relacional -> ", e);
+            throw new IntegratyViolation("Erro de integridade relacional -> ", e);
         }
 
+    }
+
+    /**
+     * Inclui um nova candidato no cadastro de eleiçao
+     * @param eleicao 
+     * @param candidato
+     * @return fichha completa da eleiçao {FichaCompletaEleicaoDtoResposta}
+     */
+    @Override
+    public FichaCompletaEleicaoDtoResposta cadastraCandidato(Long eleicao, Long candidato) {
+
+        EleicaoEntidade eleicaoEntidade = buscaPorId(eleicao);
+        CandidatoEntidade candidatoEntidade = candidatoService.buscarPorId(candidato);
+
+        List<CandidatoEntidade> candidatosCadastrados = eleicaoEntidade.getCandidato();
+
+
+
+        return null;
     }
 
 

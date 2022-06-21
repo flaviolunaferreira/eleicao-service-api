@@ -1,15 +1,18 @@
 package dataa.eleger.service;
 
 import dataa.eleger.Exceptions.IntegratyViolation;
+import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.cargo.CargoDtoRequisicao;
 import dataa.eleger.dto.cargo.CargoDtoResposta;
+import dataa.eleger.entidades.CargoEntidade;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface CargoService {
-    CargoDtoResposta novoCargo(CargoDtoRequisicao cargoDtoRequisicao);
+    CargoDtoResposta novoCargo(CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado;
 
     List<CargoDtoResposta> listarTodoosCargos(int pagina, int itens);
 
@@ -20,4 +23,6 @@ public interface CargoService {
     CargoDtoResposta atualizarCargo(CargoDtoRequisicao cargoDtoRequisicao, Long id);
 
     void apagarCargo(Long id) throws IntegratyViolation;
+
+    CargoEntidade buscarPorId(Long id) throws NotFound;
 }

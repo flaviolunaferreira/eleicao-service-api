@@ -1,5 +1,6 @@
 package dataa.eleger.dto.eleicao;
 
+import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.EleicaoEntidade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -19,6 +21,7 @@ public class FichaCompletaEleicaoDtoResposta {
     private String nome;
     private LocalDate inicio;
     private LocalDate fim;
+    private List<CandidatoEntidade> candidato;
     private String criadoPor;
     private LocalDateTime criadoData;
     private String modificadoPor;
@@ -29,6 +32,7 @@ public class FichaCompletaEleicaoDtoResposta {
         this.setNome(result.getNome());
         this.setInicio(result.getInicio());
         this.setFim(result.getFim());
+        this.setCandidato(result.getCandidato());
         this.setCriadoPor(result.getCriadoPor());
         this.setCriadoData(result.getCriadoData());
         this.setModificadoPor(result.getModificadoPor());

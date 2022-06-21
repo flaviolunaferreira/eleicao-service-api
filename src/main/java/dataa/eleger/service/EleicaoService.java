@@ -25,4 +25,6 @@ public interface EleicaoService {
     FichaCompletaEleicaoDtoResposta atualizarEleicao(EleicaoDtoRequisicao eleicaoDtoRequisicao, Long id);
 
     void apagaEleicao(Long id) throws IntegratyViolation;
+
+    FichaCompletaEleicaoDtoResposta cadastraCandidato(Long eleicao, Long candidato);
 }
