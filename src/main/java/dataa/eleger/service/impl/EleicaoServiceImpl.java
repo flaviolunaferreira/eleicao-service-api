@@ -147,7 +147,7 @@ public class EleicaoServiceImpl implements EleicaoService {
             eleicaoRepositorio.deleteById(id);
         // caso tenha algum registro filho ele lança uma excceção
         } catch (IntegratyViolation e) {
-            new IntegratyViolation("Erro de integridade relacional -> ", e);
+            throw new IntegratyViolation("Erro de integridade relacional -> ", e);
         }
 
     }

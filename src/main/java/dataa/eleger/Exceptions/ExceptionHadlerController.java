@@ -29,5 +29,6 @@ public class ExceptionHadlerController {
 		);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
 	}
-	
+
+
 }

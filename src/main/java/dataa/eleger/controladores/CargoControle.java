@@ -1,6 +1,7 @@
 package dataa.eleger.controladores;
 
 import dataa.eleger.Exceptions.IntegratyViolation;
+import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.cargo.CargoDtoRequisicao;
 import dataa.eleger.dto.cargo.CargoDtoResposta;
 import dataa.eleger.service.CargoService;
@@ -26,7 +27,7 @@ public class CargoControle {
 
     @ApiOperation(value = "Salva um novo cargo", notes = "Salva umm novo cargo no banco de dados"  )
     @PostMapping("/")
-    public ResponseEntity<CargoDtoResposta> salvarNovoCargo(@RequestBody CargoDtoRequisicao cargoDtoRequisicao) {
+    public ResponseEntity<CargoDtoResposta> salvarNovoCargo(@RequestBody CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado {
 
         //Enviando requisição para outra classe resolver
         return new ResponseEntity<>(cargoService.novoCargo(cargoDtoRequisicao), HttpStatus.CREATED);

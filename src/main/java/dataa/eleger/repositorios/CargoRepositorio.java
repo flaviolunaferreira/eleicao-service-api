@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CargoRepositorio extends PagingAndSortingRepository<CargoEntidade, Long> {
     List<CargoEntidade> findByNomeCargoContainingIgnoreCase(String nome);
+
+    CargoEntidade findByNomeCargo(String nomeCargo);
 }
