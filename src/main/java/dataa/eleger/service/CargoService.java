@@ -1,7 +1,7 @@
 package dataa.eleger.service;
 
-import dataa.eleger.Exceptions.IntegratyViolation;
-import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
+import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.cargo.CargoDtoRequisicao;
 import dataa.eleger.dto.cargo.CargoDtoResposta;
@@ -22,7 +22,7 @@ public interface CargoService {
 
     CargoDtoResposta atualizarCargo(CargoDtoRequisicao cargoDtoRequisicao, Long id);
 
-    void apagarCargo(Long id) throws IntegratyViolation;
+    void apagarCargo(Long id) throws ViolacaoDeIntegridade;
 
-    CargoEntidade buscarPorId(Long id) throws NotFound;
+    CargoEntidade buscarPorId(Long id) throws NaoEncontrado;
 }

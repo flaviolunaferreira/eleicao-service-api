@@ -1,9 +1,14 @@
 package dataa.eleger.Exceptions;
 
-public class ValorDuplicado extends Exception {
+public class ValorDuplicado extends RuntimeException{
 
-    @Override
-    public String getMessage() {
-        return "Já existe um campo com esse nome";
+    private static final long serialVersionUID = 1L;
+
+    public ValorDuplicado(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+    public ValorDuplicado(String message) {
+            super(message);
     }
 }

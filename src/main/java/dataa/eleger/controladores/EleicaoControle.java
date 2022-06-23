@@ -1,7 +1,8 @@
 package dataa.eleger.controladores;
 
-import dataa.eleger.Exceptions.IntegratyViolation;
-import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
+import dataa.eleger.Exceptions.NaoEncontrado;
+import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.eleicao.FichaCompletaEleicaoDtoResposta;
 import dataa.eleger.dto.eleicao.EleicaoDtoRequisicao;
 import dataa.eleger.dto.eleicao.EleicaoDtoResposta;
@@ -67,7 +68,7 @@ public class EleicaoControle {
      * Procura a eleição pelo id
      * @param id
      * @return retorna a ficha completa do cadastro de eleicao
-     * @throws NotFound
+     * @throws NaoEncontrado
      ***********************************************************************************/
     @ApiOperation(value = "Lista eleição por Id", notes = "Ficha completa da eleição filtrada pelo id")
     @GetMapping("/{id}")
@@ -108,21 +109,21 @@ public class EleicaoControle {
     @ApiOperation(value = "Inclui um candidato", notes = "Inclui um Candidato no cadastro da eleição.")
     @PutMapping("/eleicao/{eleicao}/candidato/{candidato}")
     public ResponseEntity<FichaCompletaEleicaoDtoResposta> incluirCandidato(
-            @PathVariable Long eleicao, @PathVariable Long candidato) {
+            @PathVariable Long eleicao, @PathVariable Long candidato) throws ValorDuplicado {
         FichaCompletaEleicaoDtoResposta resultado = eleicaoService.cadastraCandidato(eleicao, candidato);
         return ResponseEntity.ok().body(resultado);
     }
 
 
     /**********************************************************************************
-     * Apaga um registro definitivamento do banco de dados
+     * Apaga uma eleição definitivamento do banco de dados
      * @param id
      * @return NotContent
-     * @throws IntegratyViolation
+     * @throws ViolacaoDeIntegridade
      *********************************************************************************/
-    @ApiOperation(value = "Apagar Eleiçao", notes = "Apaga uma eleiçao do cadastro se nao tiver tabelas filhas")
+    @ApiOperation(value = "Apagar Eleiçao", notes = "Apaga uma eleiçao do cadastro")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> apagaEleicao(@PathVariable Long id) throws IntegratyViolation {
+    public ResponseEntity<?> apagaEleicao(@PathVariable Long id) throws ViolacaoDeIntegridade {
 
         // atrribuindo responsabilidade para outra classe
         eleicaoService.apagaEleicao(id);

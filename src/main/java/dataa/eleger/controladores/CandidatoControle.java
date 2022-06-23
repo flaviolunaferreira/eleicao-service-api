@@ -1,6 +1,6 @@
 package dataa.eleger.controladores;
 
-import dataa.eleger.Exceptions.IntegratyViolation;
+import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.dto.candidatos.CandidatoDtoRequest;
 import dataa.eleger.dto.candidatos.CandidatoDtoResposta;
 import dataa.eleger.service.CandidatoService;
@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class CandidatoControle {
     @ApiOperation(value = "Salva um nome candidato", notes = "Salva um  nome candidato no bando de dados.")
     @PostMapping("/")
     public ResponseEntity<CandidatoDtoResposta> salvarNovoCandidato(
-            @RequestBody CandidatoDtoRequest candidatoDtoRequest) {
+            @RequestBody @Validated CandidatoDtoRequest candidatoDtoRequest) {
         return new ResponseEntity<>(candidatoService.salvarNovoCandidato(candidatoDtoRequest), HttpStatus.CREATED);
     }
 
@@ -80,7 +81,7 @@ public class CandidatoControle {
     @ApiOperation(value = "Atualiza o candidato.", notes = "Atualiza o cadástro do candidato.")
     @PutMapping("/{id}")
     public ResponseEntity<CandidatoDtoResposta> atualizaCandidato(
-            @RequestBody @Valid CandidatoDtoRequest candidatoDtoRequest,
+            @RequestBody @Validated CandidatoDtoRequest candidatoDtoRequest,
             @PathVariable Long id) {
         return new ResponseEntity<>(candidatoService.atualizaCandidato(candidatoDtoRequest, id), HttpStatus.ACCEPTED);
     }
@@ -89,12 +90,12 @@ public class CandidatoControle {
      * Apaga um candidato definitivamente do bando de dados
      * @param id
      * @return Not_Content
-     * @throws IntegratyViolation
+     * @throws ViolacaoDeIntegridade
      *************************************************************************/
     @ApiOperation(value = "Apaga cadastro do candidato.",
-            notes = "Apaga o cadastro de um candidado que não tenha tabelas filhas relacionadas.")
+            notes = "Apaga o cadastro de um candidado.")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> apagarCandidato(@PathVariable Long id) throws IntegratyViolation {
+    public ResponseEntity<?> apagarCandidato(@PathVariable Long id) throws ViolacaoDeIntegridade {
         return ResponseEntity.noContent().build();
     }
 

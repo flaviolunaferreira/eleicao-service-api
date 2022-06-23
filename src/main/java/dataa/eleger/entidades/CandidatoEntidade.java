@@ -16,11 +16,14 @@ public class CandidatoEntidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCandidato;
+    @Column(nullable = false)
     private String nomeCandidato;
 
     @OneToOne
     @JoinColumn(name = "idCargo")
     private CargoEntidade cargoEntidade;
+
+    @Column(nullable = false)
     private String foto;
 
     private String criadoPor = System.getProperty("user.name");

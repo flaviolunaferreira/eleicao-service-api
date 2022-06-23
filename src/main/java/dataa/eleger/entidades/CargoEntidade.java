@@ -2,10 +2,7 @@ package dataa.eleger.entidades;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Setter
@@ -20,7 +17,9 @@ public class CargoEntidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCargo;
 
+    @Column(nullable = false)
     private String nomeCargo;
+
     private String criadoPor = System.getProperty("user.name");
     private LocalDateTime criadoData = LocalDateTime.now();
 

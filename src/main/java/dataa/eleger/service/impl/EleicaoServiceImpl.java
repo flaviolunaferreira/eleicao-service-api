@@ -1,7 +1,8 @@
 package dataa.eleger.service.impl;
 
-import dataa.eleger.Exceptions.IntegratyViolation;
-import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
+import dataa.eleger.Exceptions.NaoEncontrado;
+import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.eleicao.EleicaoDtoRequisicao;
 import dataa.eleger.dto.eleicao.EleicaoDtoResposta;
 import dataa.eleger.dto.eleicao.FichaCompletaEleicaoDtoResposta;
@@ -86,7 +87,7 @@ public class EleicaoServiceImpl implements EleicaoService {
      * pesquisando eleição por id
      * @param id
      * @return lista comleta da eleição por id
-     * @throws NotFound
+     * @throws NaoEncontrado
      *************************************************************************/
     @Override
     public FichaCompletaEleicaoDtoResposta procurarEleicaoPorId(Long id) {
@@ -138,10 +139,10 @@ public class EleicaoServiceImpl implements EleicaoService {
     /**************************************************************************
      * Apaga um registro definitivamente do banco de dados, se nao tiver relacionamentos pendentes.
      * @param id
-     * @throws IntegratyViolation
+     * @throws ViolacaoDeIntegridade
      *************************************************************************/
     @Override
-    public void apagaEleicao(Long id) throws IntegratyViolation {
+    public void apagaEleicao(Long id) throws ViolacaoDeIntegridade {
 
         // buscando registro
         EleicaoEntidade result = buscaPorId(id);
@@ -150,8 +151,8 @@ public class EleicaoServiceImpl implements EleicaoService {
         try {
             eleicaoRepositorio.deleteById(id);
         // caso tenha algum registro filho ele lança uma excceção
-        } catch (IntegratyViolation e) {
-            throw new IntegratyViolation("Erro de integridade relacional -> ", e);
+        } catch (ViolacaoDeIntegridade e) {
+            throw new ViolacaoDeIntegridade("Erro de integridade relacional -> ", e);
         }
 
     }
@@ -163,27 +164,36 @@ public class EleicaoServiceImpl implements EleicaoService {
      * @return fichha completa da eleiçao {FichaCompletaEleicaoDtoResposta}
      */
     @Override
-    public FichaCompletaEleicaoDtoResposta cadastraCandidato(Long eleicao, Long candidato) {
+    public FichaCompletaEleicaoDtoResposta cadastraCandidato(Long eleicao, Long candidato) throws ValorDuplicado {
 
         EleicaoEntidade eleicaoEntidade = buscaPorId(eleicao);
         CandidatoEntidade candidatoEntidade = candidatoService.buscarPorId(candidato);
-
         List<CandidatoEntidade> candidatosCadastrados = eleicaoEntidade.getCandidato();
 
+        List<CandidatoEntidade> seExisteCandidato = candidatosCadastrados
+        .stream().filter(item -> item.getNomeCandidato()
+                            .contentEquals(candidatoEntidade.getNomeCandidato()))
+                    .collect(Collectors.toList());
+
+            if (seExisteCandidato.isEmpty()) {
+                candidatosCadastrados.add(candidatoEntidade);
+                eleicaoEntidade.setCandidato(candidatosCadastrados);
+                return new FichaCompletaEleicaoDtoResposta(eleicaoRepositorio.save(eleicaoEntidade));
+            }
 
 
-        return null;
+            throw new ValorDuplicado("Sinto Muito... Já tenhho o nome deste Candidato cadastrado.");
     }
 
 
     /**************************************************************************
      * criando método buscar por id para usar em outros serviços
      *************************************************************************/
-    private EleicaoEntidade buscaPorId(Long id) throws NotFound{
+    private EleicaoEntidade buscaPorId(Long id) throws NaoEncontrado {
 
         // mandando uma resposta mais amigável para o front
         return eleicaoRepositorio.findById(id).orElseThrow(
-                () -> new NotFound("Desculpe, mas não conseguir encontrar a eleição com o id: " + id)
+                () -> new NaoEncontrado("Desculpe, mas não conseguir encontrar a eleição com o id: " + id)
         );
     }
 
