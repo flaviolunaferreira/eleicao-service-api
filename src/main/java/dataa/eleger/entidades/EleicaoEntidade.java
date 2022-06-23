@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -29,8 +30,8 @@ public class EleicaoEntidade {
     private LocalDate fim;
 
     @OneToMany
-    @JoinColumn(name = "idCandidato")
-    private List<CandidatoEntidade> candidato;
+    @JoinColumn(name = "Candidato_idCandidato")
+    private List<CandidatoEntidade> candidato = new ArrayList<>();
     
     private String criadoPor = System.getProperty("user.name");
     private LocalDateTime criadoData = LocalDateTime.now();
@@ -42,6 +43,5 @@ public class EleicaoEntidade {
         this.nome = nome;
         this.inicio = inicio;
         this.fim = fim;
-
     }
 }

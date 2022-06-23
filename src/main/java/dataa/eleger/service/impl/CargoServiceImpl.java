@@ -1,7 +1,7 @@
 package dataa.eleger.service.impl;
 
-import dataa.eleger.Exceptions.IntegratyViolation;
-import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
+import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.cargo.CargoDtoRequisicao;
 import dataa.eleger.dto.cargo.CargoDtoResposta;
@@ -35,7 +35,7 @@ public class CargoServiceImpl implements CargoService {
     public CargoDtoResposta novoCargo(CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado {
         CargoEntidade procurarNome = cargoRepositorio.findByNomeCargo(cargoDtoRequisicao.getNomeCargo());
         if (procurarNome == null) return new CargoDtoResposta(cargoRepositorio.save(cargoDtoRequisicao.novoCargo()));
-        throw new ValorDuplicado();
+        throw new ValorDuplicado("Sinto Muito... Já tenho esse nome de Cargo Cadastrado!");
     }
 
     /**
@@ -88,22 +88,22 @@ public class CargoServiceImpl implements CargoService {
     /**
      * @param id 
      * @return
-     * @throws IntegratyViolation
+     * @throws ViolacaoDeIntegridade
      */
     @Override
-    public void apagarCargo(Long id) throws IntegratyViolation {
+    public void apagarCargo(Long id) throws ViolacaoDeIntegridade {
         CargoEntidade resultado = buscarPorId(id);
         try {
             cargoRepositorio.deleteById(resultado.getIdCargo());
         } catch(Exception e) {
-            throw new IntegratyViolation("Erro de integridade relacional -> ", e);
+            throw new ViolacaoDeIntegridade("Erro de integridade relacional -> ", e);
         }
     }
 
 
-    public CargoEntidade buscarPorId(Long id) throws NotFound {
+    public CargoEntidade buscarPorId(Long id) throws NaoEncontrado {
         return cargoRepositorio.findById(id)
-                .orElseThrow(() -> new NotFound("Desculpe, mas não encontrei um cargo com id: " + id ));
+                .orElseThrow(() -> new NaoEncontrado("Desculpe, mas não encontrei um cargo com id: " + id ));
     }
 
 }

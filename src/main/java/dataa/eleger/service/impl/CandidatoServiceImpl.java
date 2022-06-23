@@ -1,13 +1,13 @@
 package dataa.eleger.service.impl;
 
-import dataa.eleger.Exceptions.IntegratyViolation;
-import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
+import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.dto.candidatos.CandidatoDtoRequest;
 import dataa.eleger.dto.candidatos.CandidatoDtoResposta;
 import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.repositorios.CandidatoRepositorio;
+import dataa.eleger.repositorios.CargoRepositorio;
 import dataa.eleger.service.CandidatoService;
-import dataa.eleger.service.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 public class CandidatoServiceImpl implements CandidatoService {
 
     private final CandidatoRepositorio candidatoRepositorio;
-    private final CargoService cargoService;
+    private final CargoRepositorio cargoRepositorio;
 
     @Autowired
-    public CandidatoServiceImpl(CandidatoRepositorio candidatoRepositorio, CargoService cargoService) {
+    public CandidatoServiceImpl(CandidatoRepositorio candidatoRepositorio, CargoRepositorio cargoRepositorio, CargoRepositorio cargoRepositorio1) {
         this.candidatoRepositorio = candidatoRepositorio;
-        this.cargoService = cargoService;
+        this.cargoRepositorio = cargoRepositorio;
     }
 
 
@@ -37,7 +37,8 @@ public class CandidatoServiceImpl implements CandidatoService {
      *************************************************************************/
     @Override
     public CandidatoDtoResposta salvarNovoCandidato(CandidatoDtoRequest candidatoDtoRequest) {
-        CandidatoEntidade resultado = candidatoDtoRequest.newCandidato(candidatoDtoRequest, cargoService);
+
+        CandidatoEntidade resultado = candidatoDtoRequest.newCandidato(cargoRepositorio);
         return new CandidatoDtoResposta(candidatoRepositorio.save(resultado));
     }
 
@@ -87,7 +88,7 @@ public class CandidatoServiceImpl implements CandidatoService {
         CandidatoEntidade candidato = buscarPorId(id);
         {
             candidato.setNomeCandidato(candidatoDtoRequest.getNomeCandidato());
-            candidato.setCargoEntidade(cargoService.buscarPorId(candidatoDtoRequest.getIdCargo()));
+            candidato.setCargoEntidade(cargoRepositorio.findById(candidatoDtoRequest.getIdCargo()).get());
             candidato.setFoto(candidatoDtoRequest.getFoto());
             candidato.setModificadoPor(System.getProperty("user.name"));
             candidato.setModificadoData(LocalDateTime.now());
@@ -105,7 +106,7 @@ public class CandidatoServiceImpl implements CandidatoService {
         try {
             candidatoRepositorio.delete(resultado);
         } catch(Exception e) {
-            throw new IntegratyViolation("Não foi possível apagar o candidato, existem chaves de relacionamento pendentes. " + e);
+            throw new ViolacaoDeIntegridade("Não foi possível apagar o candidato, existem chaves de relacionamento pendentes. " + e);
         }
     }
 
@@ -114,11 +115,11 @@ public class CandidatoServiceImpl implements CandidatoService {
      * Busca um cadidato por id e lança uma exceção se não encontrar
      * @param idCandidato
      * @return ficha do candidato {CandidatoEntidade}
-     * @throws NotFound
+     * @throws NaoEncontrado
      */
     @Override
-    public CandidatoEntidade buscarPorId(Long idCandidato) throws NotFound {
+    public CandidatoEntidade buscarPorId(Long idCandidato) throws NaoEncontrado {
         return candidatoRepositorio.findById(idCandidato).orElseThrow(() ->
-            new NotFound("Desculpe mas não encontrei o candidato com o id: " + idCandidato));
+            new NaoEncontrado("Desculpe mas não encontrei o candidato com o id: " + idCandidato));
     }
 }

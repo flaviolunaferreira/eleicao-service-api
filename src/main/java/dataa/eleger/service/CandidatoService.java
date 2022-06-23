@@ -1,6 +1,6 @@
 package dataa.eleger.service;
 
-import dataa.eleger.Exceptions.NotFound;
+import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.dto.candidatos.CandidatoDtoRequest;
 import dataa.eleger.dto.candidatos.CandidatoDtoResposta;
 import dataa.eleger.entidades.CandidatoEntidade;
@@ -23,6 +23,6 @@ public interface CandidatoService {
 
     void apagarCandidato(Long id);
 
-    CandidatoEntidade buscarPorId(Long idCandidato) throws NotFound;
+    CandidatoEntidade buscarPorId(Long idCandidato) throws NaoEncontrado;
 
 }

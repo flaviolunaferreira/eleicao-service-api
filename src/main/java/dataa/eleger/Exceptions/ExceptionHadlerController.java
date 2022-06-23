@@ -10,8 +10,8 @@ import javax.servlet.ServletRequest;
 @ControllerAdvice
 public class ExceptionHadlerController {
 
-	@ExceptionHandler(NotFound.class)
-	public ResponseEntity<StandardError> notFoundException(NotFound e, ServletRequest request) {
+	@ExceptionHandler(NaoEncontrado.class)
+	public ResponseEntity<StandardError> notFoundException(NaoEncontrado e, ServletRequest request) {
 		StandardError error = new StandardError (
 				System.currentTimeMillis(),
 				HttpStatus.NOT_FOUND.value(),
@@ -20,8 +20,8 @@ public class ExceptionHadlerController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
 	
-	@ExceptionHandler(IntegratyViolation.class)
-	public ResponseEntity<StandardError> integratyViolationException(IntegratyViolation e, ServletRequest request) {
+	@ExceptionHandler(ViolacaoDeIntegridade.class)
+	public ResponseEntity<StandardError> integratyViolationException(ViolacaoDeIntegridade e, ServletRequest request) {
 		StandardError error = new StandardError(
 				System.currentTimeMillis(),
 				HttpStatus.BAD_REQUEST.value(),
@@ -30,5 +30,14 @@ public class ExceptionHadlerController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).body(error);
 	}
 
+	@ExceptionHandler(ValorDuplicado.class)
+	public ResponseEntity<StandardError> valorDuplicado(ValorDuplicado e, ServletRequest request) {
+		StandardError error = new StandardError (
+				System.currentTimeMillis(),
+				HttpStatus.NOT_FOUND.value(),
+				e.getMessage()
+		);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
 
 }

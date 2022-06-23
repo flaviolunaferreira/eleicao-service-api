@@ -1,6 +1,6 @@
 package dataa.eleger.controladores;
 
-import dataa.eleger.Exceptions.IntegratyViolation;
+import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.dto.cargo.CargoDtoRequisicao;
 import dataa.eleger.dto.cargo.CargoDtoResposta;
@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class CargoControle {
 
     @ApiOperation(value = "Salva um novo cargo", notes = "Salva umm novo cargo no banco de dados"  )
     @PostMapping("/")
-    public ResponseEntity<CargoDtoResposta> salvarNovoCargo(@RequestBody CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado {
+    public ResponseEntity<CargoDtoResposta> salvarNovoCargo(@RequestBody @Validated CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado {
 
         //Enviando requisição para outra classe resolver
         return new ResponseEntity<>(cargoService.novoCargo(cargoDtoRequisicao), HttpStatus.CREATED);
@@ -54,13 +55,14 @@ public class CargoControle {
 
     @ApiOperation(value = "Alterar o cargo", notes = "Alterar o nome do cargo.")
     @PutMapping("/{id}")
-    public ResponseEntity<CargoDtoResposta> atualizarCargo(@RequestBody CargoDtoRequisicao cargoDtoRequisicao, @PathVariable Long id) {
+    public ResponseEntity<CargoDtoResposta> atualizarCargo(@RequestBody @Validated CargoDtoRequisicao cargoDtoRequisicao, @PathVariable Long id) {
         return new ResponseEntity<>(cargoService.atualizarCargo(cargoDtoRequisicao, id), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(value = "Apagar um Cargo", notes = "Apaga um Cargo definitivamente do cadastro")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> apagarCargo(@PathVariable Long id) throws IntegratyViolation {
+    public ResponseEntity<?> apagarCargo(@PathVariable Long id) throws ViolacaoDeIntegridade {
+        cargoService.apagarCargo(id);
         return ResponseEntity.noContent().build();
     }
 
