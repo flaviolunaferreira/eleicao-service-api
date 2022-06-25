@@ -181,8 +181,7 @@ public class EleicaoServiceImpl implements EleicaoService {
                 return new FichaCompletaEleicaoDtoResposta(eleicaoRepositorio.save(eleicaoEntidade));
             }
 
-
-            throw new ValorDuplicado("Sinto Muito... Já tenhho o nome deste Candidato cadastrado.");
+            throw new ValorDuplicado("Sinto Muito... Já tenho o nome deste Candidato cadastrado.");
     }
 
 

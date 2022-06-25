@@ -9,10 +9,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -28,8 +28,9 @@ public class CargoControle {
 
 
     @ApiOperation(value = "Salva um novo cargo", notes = "Salva umm novo cargo no banco de dados"  )
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
-    public ResponseEntity<CargoDtoResposta> salvarNovoCargo(@RequestBody @Validated CargoDtoRequisicao cargoDtoRequisicao0) throws ValorDuplicado {
+    public ResponseEntity<CargoDtoResposta> salvarNovoCargo(@RequestBody @Validated CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado {
 
         //Enviando requisição para outra classe resolver
         return new ResponseEntity<>(cargoService.novoCargo(cargoDtoRequisicao), HttpStatus.CREATED);

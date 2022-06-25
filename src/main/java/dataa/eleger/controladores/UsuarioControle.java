@@ -1,5 +1,6 @@
 package dataa.eleger.controladores;
 
+import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.entidades.UsuarioEntidade;
 import dataa.eleger.modelos.usuario.UsuarioDtoRequisicao;
 import dataa.eleger.modelos.usuario.UsuarioDtoResposta;
@@ -64,5 +65,13 @@ public class UsuarioControle {
     }
 
 
+    @ApiOperation(value = "Adiciona permissão ao usuário", notes = "Inclui uma nova permissão ao usuário.")
+    @PutMapping("/permissao/usuario/{usuario}/permissao/{permissao}")
+    public ResponseEntity<UsuarioDtoResposta> incluirPermmissao(@PathVariable Long usuario,
+                                                                @PathVariable Long permissao)
+                                                                throws ValorDuplicado {
+        UsuarioDtoResposta resultado = usuarioService.IncluiPermissao(usuario, permissao);
+        return ResponseEntity.ok().body(resultado);
+    }
 
 }

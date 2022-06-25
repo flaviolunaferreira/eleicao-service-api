@@ -2,13 +2,11 @@ package dataa.eleger.entidades;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,6 +26,10 @@ public class UsuarioEntidade {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     private String cpf;
+
+    @OneToMany
+    @JoinColumn(name = "Usuario_idPermissao")
+    private List<PermissoesEntidade> permissoesEntidade = new ArrayList<>();
 
     private String criadoPor = System.getProperty("user.name");
     private LocalDateTime criadoData = LocalDateTime.now();

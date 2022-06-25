@@ -1,15 +1,19 @@
 package dataa.eleger.service.impl;
 
+import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
+import dataa.eleger.entidades.PermissoesEntidade;
 import dataa.eleger.entidades.UsuarioEntidade;
 import dataa.eleger.modelos.usuario.UsuarioDtoRequisicao;
 import dataa.eleger.modelos.usuario.UsuarioDtoResposta;
 import dataa.eleger.repositorios.UsuarioRepositorio;
+import dataa.eleger.service.PermissaoService;
 import dataa.eleger.service.UsuarioService;
 import dataa.eleger.uteis.Cpf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +25,14 @@ import java.util.stream.Collectors;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepositorio usuarioRepositorio;
-    private final PasswordEncoder encoder;
+    private final PermissaoService permissaoService;
+    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     private final Cpf cpf;
 
     @Autowired
-    public UsuarioServiceImpl(UsuarioRepositorio usuarioRepositorio, PasswordEncoder encoder, Cpf cpf) {
+    public UsuarioServiceImpl(UsuarioRepositorio usuarioRepositorio, PermissaoService permissaoService, Cpf cpf) {
         this.usuarioRepositorio = usuarioRepositorio;
-        this.encoder = encoder;
+        this.permissaoService = permissaoService;
         this.cpf = cpf;
     }
 
@@ -64,10 +69,34 @@ public class UsuarioServiceImpl implements UsuarioService {
         UsuarioEntidade usuarioEntidade = opUsuario.get();
 
         // agora validando a senha
-        boolean valid = encoder.matches(senha, usuarioEntidade.getSenha());
+        return encoder.matches(senha, usuarioEntidade.getSenha());
 
-        //retornando o resultado
-        return valid ? true : false;
+    }
+
+    @Override
+    public UsuarioDtoResposta IncluiPermissao(Long usuario, Long permissao) throws ValorDuplicado {
+
+        UsuarioEntidade usuarioEntidade = buscarUsuarioPorId(usuario);
+        PermissoesEntidade permissoesEntidade = permissaoService.buscarPorId(permissao);
+        List<PermissoesEntidade> permissoesCadastradas = usuarioEntidade.getPermissoesEntidade();
+
+        List<PermissoesEntidade> seExistePermissaoCadastrada = permissoesCadastradas
+                .stream().filter(item -> item.getIdPermissao().equals(permissao))
+                .collect(Collectors.toList());
+
+        if (seExistePermissaoCadastrada.isEmpty()) {
+            permissoesCadastradas.add(permissoesEntidade);
+            usuarioEntidade.setPermissoesEntidade(permissoesCadastradas);;
+            return new UsuarioDtoResposta(usuarioRepositorio.save(usuarioEntidade));
+        }
+
+        throw new ValorDuplicado("Sinto Muito... Já tenho essa permisão cadastrada para esse usuário.");
+    }
+
+    @Override
+    public UsuarioEntidade buscarUsuarioPorId(Long usuario) throws NaoEncontrado {
+        return usuarioRepositorio.findById(usuario)
+                .orElseThrow(() ->  new NaoEncontrado("Desculpe, mas não encontrei o usuário com o id: " + usuario));
     }
 
 
