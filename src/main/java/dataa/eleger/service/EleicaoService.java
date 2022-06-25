@@ -2,9 +2,9 @@ package dataa.eleger.service;
 
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.dto.eleicao.EleicaoDtoRequisicao;
-import dataa.eleger.dto.eleicao.EleicaoDtoResposta;
-import dataa.eleger.dto.eleicao.FichaCompletaEleicaoDtoResposta;
+import dataa.eleger.modelos.eleicao.EleicaoDtoRequisicao;
+import dataa.eleger.modelos.eleicao.EleicaoDtoResposta;
+import dataa.eleger.modelos.eleicao.FichaCompletaEleicaoDtoResposta;
 import dataa.eleger.entidades.EleicaoEntidade;
 import org.springframework.stereotype.Service;
 

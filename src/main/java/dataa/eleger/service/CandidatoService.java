@@ -1,8 +1,8 @@
 package dataa.eleger.service;
 
 import dataa.eleger.Exceptions.NaoEncontrado;
-import dataa.eleger.dto.candidatos.CandidatoDtoRequest;
-import dataa.eleger.dto.candidatos.CandidatoDtoResposta;
+import dataa.eleger.modelos.candidatos.CandidatoDtoRequest;
+import dataa.eleger.modelos.candidatos.CandidatoDtoResposta;
 import dataa.eleger.entidades.CandidatoEntidade;
 import org.springframework.stereotype.Service;
 

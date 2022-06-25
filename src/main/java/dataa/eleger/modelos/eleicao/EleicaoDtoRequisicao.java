@@ -1,4 +1,4 @@
-package dataa.eleger.dto.eleicao;
+package dataa.eleger.modelos.eleicao;
 
 
 import dataa.eleger.entidades.EleicaoEntidade;

@@ -1,12 +1,9 @@
-package dataa.eleger.dto.candidatos;
+package dataa.eleger.modelos.candidatos;
 
 import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.CargoEntidade;
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter

@@ -1,8 +1,8 @@
 package dataa.eleger.controladores;
 
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
-import dataa.eleger.dto.candidatos.CandidatoDtoRequest;
-import dataa.eleger.dto.candidatos.CandidatoDtoResposta;
+import dataa.eleger.modelos.candidatos.CandidatoDtoRequest;
+import dataa.eleger.modelos.candidatos.CandidatoDtoResposta;
 import dataa.eleger.service.CandidatoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

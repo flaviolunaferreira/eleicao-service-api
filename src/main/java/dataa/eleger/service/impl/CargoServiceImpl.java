@@ -3,8 +3,8 @@ package dataa.eleger.service.impl;
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.dto.cargo.CargoDtoRequisicao;
-import dataa.eleger.dto.cargo.CargoDtoResposta;
+import dataa.eleger.modelos.cargo.CargoDtoRequisicao;
+import dataa.eleger.modelos.cargo.CargoDtoResposta;
 import dataa.eleger.entidades.CargoEntidade;
 import dataa.eleger.repositorios.CargoRepositorio;
 import dataa.eleger.service.CargoService;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
