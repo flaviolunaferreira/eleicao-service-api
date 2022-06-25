@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/vi/cargo")
+@RequestMapping("/api/v1/cargo")
+@PreAuthorize("hasRole('ADMINISTRADOR')")
 public class CargoControle {
 
     private final CargoService cargoService;
@@ -28,7 +29,6 @@ public class CargoControle {
 
 
     @ApiOperation(value = "Salva um novo cargo", notes = "Salva umm novo cargo no banco de dados"  )
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<CargoDtoResposta> salvarNovoCargo(@RequestBody @Validated CargoDtoRequisicao cargoDtoRequisicao) throws ValorDuplicado {
 

@@ -13,6 +13,7 @@ import dataa.eleger.uteis.Cpf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepositorio usuarioRepositorio;
     private final PermissaoService permissaoService;
-    PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+    private BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
     private final Cpf cpf;
 
     @Autowired
@@ -44,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioDtoResposta salvarNovoUsuario(UsuarioDtoRequisicao usuarioDtoRequisicao) throws ValorDuplicado {
         // encriptando a senha do usuário.
-        usuarioDtoRequisicao.setSenha(encoder.encode(usuarioDtoRequisicao.getSenha()));
+        usuarioDtoRequisicao.setSenha(encoder().encode(usuarioDtoRequisicao.getSenha()));
 
         UsuarioEntidade procurarPorCpf = usuarioRepositorio.findUsuarioByCpf(
                 cpf.formataCpf(usuarioDtoRequisicao.getCpf()));
@@ -69,7 +73,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         UsuarioEntidade usuarioEntidade = opUsuario.get();
 
         // agora validando a senha
-        return encoder.matches(senha, usuarioEntidade.getSenha());
+        return encoder().matches(senha, usuarioEntidade.getSenha());
 
     }
 

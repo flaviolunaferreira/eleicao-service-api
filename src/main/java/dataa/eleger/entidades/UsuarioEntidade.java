@@ -27,7 +27,7 @@ public class UsuarioEntidade {
     private String senha;
     private String cpf;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "Usuario_idPermissao")
     private List<PermissoesEntidade> permissoesEntidade = new ArrayList<>();
 

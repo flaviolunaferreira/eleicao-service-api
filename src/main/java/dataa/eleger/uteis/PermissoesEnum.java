@@ -2,8 +2,8 @@ package dataa.eleger.uteis;
 
 public enum PermissoesEnum {
 
-    USUARIO("usuario"),
-    ADMINISTRADOR("administrador");
+    USUARIO("USUARIO"),
+    ADMINISTRADOR("ADMINISTRADOR");
 
     private final String descricao;
 

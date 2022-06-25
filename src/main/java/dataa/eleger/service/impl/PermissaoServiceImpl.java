@@ -10,6 +10,9 @@ import dataa.eleger.service.PermissaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PermissaoServiceImpl implements PermissaoService {
 
@@ -32,5 +35,11 @@ public class PermissaoServiceImpl implements PermissaoService {
     public PermissoesEntidade buscarPorId(Long permissao) throws NaoEncontrado {
          return permissaoRepositorio.findById(permissao)
             .orElseThrow(() ->  new NaoEncontrado("Desculpe, mas não encontrei a permissão com o id: " + permissao));
+    }
+
+    @Override
+    public List<PermissaoDtoResposta> listarTodasPermissoes() {
+        List<PermissoesEntidade> list = permissaoRepositorio.findAll();
+        return list.stream().map(PermissaoDtoResposta::new).collect(Collectors.toList());
     }
 }
