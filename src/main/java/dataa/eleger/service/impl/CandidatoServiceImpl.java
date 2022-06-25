@@ -2,8 +2,8 @@ package dataa.eleger.service.impl;
 
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.NaoEncontrado;
-import dataa.eleger.dto.candidatos.CandidatoDtoRequest;
-import dataa.eleger.dto.candidatos.CandidatoDtoResposta;
+import dataa.eleger.modelos.candidatos.CandidatoDtoRequest;
+import dataa.eleger.modelos.candidatos.CandidatoDtoResposta;
 import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.repositorios.CandidatoRepositorio;
 import dataa.eleger.repositorios.CargoRepositorio;

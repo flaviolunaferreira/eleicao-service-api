@@ -3,9 +3,9 @@ package dataa.eleger.service.impl;
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.dto.eleicao.EleicaoDtoRequisicao;
-import dataa.eleger.dto.eleicao.EleicaoDtoResposta;
-import dataa.eleger.dto.eleicao.FichaCompletaEleicaoDtoResposta;
+import dataa.eleger.modelos.eleicao.EleicaoDtoRequisicao;
+import dataa.eleger.modelos.eleicao.EleicaoDtoResposta;
+import dataa.eleger.modelos.eleicao.FichaCompletaEleicaoDtoResposta;
 import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.EleicaoEntidade;
 import dataa.eleger.repositorios.EleicaoRepositorio;
@@ -181,8 +181,7 @@ public class EleicaoServiceImpl implements EleicaoService {
                 return new FichaCompletaEleicaoDtoResposta(eleicaoRepositorio.save(eleicaoEntidade));
             }
 
-
-            throw new ValorDuplicado("Sinto Muito... Já tenhho o nome deste Candidato cadastrado.");
+            throw new ValorDuplicado("Sinto Muito... Já tenho o nome deste Candidato cadastrado.");
     }
 
 

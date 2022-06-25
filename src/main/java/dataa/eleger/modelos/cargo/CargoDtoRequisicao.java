@@ -1,4 +1,4 @@
-package dataa.eleger.dto.cargo;
+package dataa.eleger.modelos.cargo;
 
 
 import dataa.eleger.entidades.CargoEntidade;
@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Setter
 @Getter

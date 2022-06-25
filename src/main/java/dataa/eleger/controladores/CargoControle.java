@@ -2,20 +2,22 @@ package dataa.eleger.controladores;
 
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.dto.cargo.CargoDtoRequisicao;
-import dataa.eleger.dto.cargo.CargoDtoResposta;
+import dataa.eleger.modelos.cargo.CargoDtoRequisicao;
+import dataa.eleger.modelos.cargo.CargoDtoResposta;
 import dataa.eleger.service.CargoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/vi/cargo")
+@RequestMapping("/api/v1/cargo")
+@PreAuthorize("hasRole('ADMINISTRADOR')")
 public class CargoControle {
 
     private final CargoService cargoService;

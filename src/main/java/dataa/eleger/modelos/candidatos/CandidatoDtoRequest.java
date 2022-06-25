@@ -1,4 +1,4 @@
-package dataa.eleger.dto.candidatos;
+package dataa.eleger.modelos.candidatos;
 
 import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.CargoEntidade;

@@ -3,11 +3,12 @@ package dataa.eleger.service;
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.dto.cargo.CargoDtoRequisicao;
-import dataa.eleger.dto.cargo.CargoDtoResposta;
+import dataa.eleger.modelos.cargo.CargoDtoRequisicao;
+import dataa.eleger.modelos.cargo.CargoDtoResposta;
 import dataa.eleger.entidades.CargoEntidade;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
