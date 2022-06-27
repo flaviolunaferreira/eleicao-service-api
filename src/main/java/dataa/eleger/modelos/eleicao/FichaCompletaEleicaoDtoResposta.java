@@ -2,6 +2,7 @@ package dataa.eleger.modelos.eleicao;
 
 import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.EleicaoEntidade;
+import dataa.eleger.entidades.VotoEntidade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

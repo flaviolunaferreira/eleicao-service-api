@@ -12,14 +12,14 @@ import java.util.List;
 @Getter
 @Entity
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioEntidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Long id;
+    private Long idUsuario;
     private String nome;
     private String email;
 
@@ -27,8 +27,7 @@ public class UsuarioEntidade {
     private String senha;
     private String cpf;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "Usuario_idPermissao")
+    @OneToMany(mappedBy = "usuarioEntidade", fetch = FetchType.EAGER)
     private List<PermissoesEntidade> permissoesEntidade = new ArrayList<>();
 
     private String criadoPor = System.getProperty("user.name");

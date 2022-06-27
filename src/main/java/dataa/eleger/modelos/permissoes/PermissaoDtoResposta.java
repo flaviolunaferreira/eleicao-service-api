@@ -1,6 +1,7 @@
 package dataa.eleger.modelos.permissoes;
 
 import dataa.eleger.entidades.PermissoesEntidade;
+import dataa.eleger.entidades.UsuarioEntidade;
 import dataa.eleger.uteis.PermissoesEnum;
 import lombok.*;
 
@@ -19,10 +20,12 @@ import javax.validation.constraints.NotNull;
 public class PermissaoDtoResposta {
 
     private Long idPermissao;
+    private String usuario;
     private String permissoesEnum;
 
     public PermissaoDtoResposta(PermissoesEntidade permissoes) {
         this.setIdPermissao(permissoes.getIdPermissao());
+        this.setUsuario(permissoes.getUsuarioEntidade().getNome());
         this.setPermissoesEnum(permissoes.getPermissoesEnum().getDescricao());
     }
 }

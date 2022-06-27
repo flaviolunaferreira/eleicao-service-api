@@ -188,7 +188,7 @@ public class EleicaoServiceImpl implements EleicaoService {
     /**************************************************************************
      * criando método buscar por id para usar em outros serviços
      *************************************************************************/
-    private EleicaoEntidade buscaPorId(Long id) throws NaoEncontrado {
+    public EleicaoEntidade buscaPorId(Long id) throws NaoEncontrado {
 
         // mandando uma resposta mais amigável para o front
         return eleicaoRepositorio.findById(id).orElseThrow(

@@ -20,8 +20,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasRole('ADMINISTRADOR')")
 @RequestMapping("/api/v1/eleicao")
+@PreAuthorize("hasRole('ADMINISTRADOR')")
 public class EleicaoControle {
 
 

@@ -77,25 +77,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     }
 
-    @Override
-    public UsuarioDtoResposta IncluiPermissao(Long usuario, Long permissao) throws ValorDuplicado {
-
-        UsuarioEntidade usuarioEntidade = buscarUsuarioPorId(usuario);
-        PermissoesEntidade permissoesEntidade = permissaoService.buscarPorId(permissao);
-        List<PermissoesEntidade> permissoesCadastradas = usuarioEntidade.getPermissoesEntidade();
-
-        List<PermissoesEntidade> seExistePermissaoCadastrada = permissoesCadastradas
-                .stream().filter(item -> item.getIdPermissao().equals(permissao))
-                .collect(Collectors.toList());
-
-        if (seExistePermissaoCadastrada.isEmpty()) {
-            permissoesCadastradas.add(permissoesEntidade);
-            usuarioEntidade.setPermissoesEntidade(permissoesCadastradas);;
-            return new UsuarioDtoResposta(usuarioRepositorio.save(usuarioEntidade));
-        }
-
-        throw new ValorDuplicado("Sinto Muito... Já tenho essa permisão cadastrada para esse usuário.");
-    }
 
     @Override
     public UsuarioEntidade buscarUsuarioPorId(Long usuario) throws NaoEncontrado {

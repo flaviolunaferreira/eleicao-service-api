@@ -1,5 +1,6 @@
 package dataa.eleger.service;
 
+import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.modelos.eleicao.EleicaoDtoRequisicao;
@@ -26,4 +27,6 @@ public interface EleicaoService {
     void apagaEleicao(Long id) throws ViolacaoDeIntegridade;
 
     FichaCompletaEleicaoDtoResposta cadastraCandidato(Long eleicao, Long candidato) throws ValorDuplicado;
+
+    EleicaoEntidade buscaPorId(Long id) throws NaoEncontrado;
 }

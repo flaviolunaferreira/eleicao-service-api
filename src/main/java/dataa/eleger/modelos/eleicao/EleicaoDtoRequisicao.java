@@ -21,12 +21,8 @@ public class EleicaoDtoRequisicao {
     @NotNull(message = "Descrição do Processo de eleição não pode ser nulo")
     private String nome;
 
-    @NotBlank(message = "Data de Início deve ser preenchida.")
-    @NotNull(message = "Data de Início deve ser preenchida.")
     private LocalDate inicio;
 
-    @NotBlank(message = "Data final deve ser preenchida.")
-    @NotBlank(message = "Data final deve ser preenchida.")
     private LocalDate fim;
 
     public EleicaoEntidade novaEleicao() {

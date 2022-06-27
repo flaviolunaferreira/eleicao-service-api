@@ -18,7 +18,7 @@ public interface UsuarioService {
 
     Boolean validarUsuario(String usuario, String senha);
 
-    UsuarioDtoResposta IncluiPermissao(Long usuario, Long permissao) throws ValorDuplicado;
+//    UsuarioDtoResposta IncluiPermissao(Long usuario, Long permissao) throws ValorDuplicado;
 
     UsuarioEntidade buscarUsuarioPorId(Long usuario) throws NaoEncontrado;
 }

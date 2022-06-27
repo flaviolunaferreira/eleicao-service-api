@@ -1,5 +1,6 @@
 package dataa.eleger.configuracoes;
 
+import dataa.eleger.entidades.PermissoesEntidade;
 import dataa.eleger.entidades.UsuarioEntidade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class PrincipalUsuarioConfig implements UserDetails {
@@ -17,16 +19,18 @@ public class PrincipalUsuarioConfig implements UserDetails {
 
     public PrincipalUsuarioConfig(UsuarioEntidade usuario) {
 
-        autorizacoes = usuario.getPermissoesEntidade().stream().map(item -> {
+        System.out.println(usuario);
 
+        List<SimpleGrantedAuthority> permissoes = usuario.getPermissoesEntidade().stream().map(item -> {
             return new SimpleGrantedAuthority("ROLE_".concat(item.getPermissoesEnum().getDescricao()));
             }).collect(Collectors.toList());
 
-        if (autorizacoes.isEmpty()) return;
+
+        if (permissoes.isEmpty()) return;
 
         this.nome = usuario.getNome();
         this.senha = usuario.getSenha();
-        this.autorizacoes = autorizacoes;
+        this.autorizacoes = permissoes;
     }
 
     public static PrincipalUsuarioConfig criar(UsuarioEntidade usuarioEntidade) {

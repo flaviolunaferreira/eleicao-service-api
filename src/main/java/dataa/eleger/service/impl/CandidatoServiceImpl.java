@@ -101,7 +101,7 @@ public class CandidatoServiceImpl implements CandidatoService {
      * @param id
      */
     @Override
-    public void apagarCandidato(Long id) {
+    public void apagarCandidato(Long id) throws ViolacaoDeIntegridade{
         CandidatoEntidade resultado = buscarPorId(id);
         try {
             candidatoRepositorio.delete(resultado);
