@@ -1,5 +1,7 @@
 package dataa.eleger.controladores;
 
+import dataa.eleger.modelos.itensDeVoto.ItensDeVotoDtoRequisicao;
+import dataa.eleger.modelos.itensDeVoto.ItensDeVotoDtoResposta;
 import dataa.eleger.modelos.voto.VotoDtoRequisicao;
 import dataa.eleger.modelos.voto.VotoDtoResposta;
 import dataa.eleger.service.VotoService;
@@ -31,10 +33,10 @@ public class VotoControle {
         return ResponseEntity.ok().body(resultado);
     }
 
-    @PutMapping("/voto/{voto}/candidato/{candidato}")
-    public ResponseEntity<VotoDtoResposta> salvaCandidatoVotado(@PathVariable Long voto,
-                                                                @PathVariable Long candidato) {
-        VotoDtoResposta resultado = votoService.salvaCandidatoVotado(voto, candidato);
+    @PostMapping("/voto/{voto}/candidato/{candidato}")
+    public ResponseEntity<ItensDeVotoDtoResposta> salvaCandidatoVotado(
+            @RequestBody ItensDeVotoDtoRequisicao itensDeVotoDtoRequisicao) {
+        ItensDeVotoDtoResposta resultado = votoService.salvaCandidatoVotado(itensDeVotoDtoRequisicao);
         return ResponseEntity.ok().body(resultado);
     }
 

@@ -5,7 +5,6 @@ import dataa.eleger.repositorios.EleicaoRepositorio;
 import dataa.eleger.repositorios.UsuarioRepositorio;
 import lombok.*;
 
-import java.util.List;
 
 @Setter
 @Getter

@@ -97,6 +97,7 @@ public class CandidatoControle {
             notes = "Apaga o cadastro de um candidado.")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> apagarCandidato(@PathVariable Long id) throws ViolacaoDeIntegridade {
+        candidatoService.apagarCandidato(id);
         return ResponseEntity.noContent().build();
     }
 

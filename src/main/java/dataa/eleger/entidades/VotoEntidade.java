@@ -23,12 +23,11 @@ public class VotoEntidade {
     @JoinColumn(name = "idUsuario")
     private UsuarioEntidade usuario;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idEleicao")
     private EleicaoEntidade eleicaoEntidade;
 
-    @OneToMany
-    @JoinColumn(name = "idItensDoVoto")
+    @OneToMany(mappedBy = "votoEntidade")
     private List<ItensDoVoto> itensDoVoto = new ArrayList<>();
 
     private String protocolo;

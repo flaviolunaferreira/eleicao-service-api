@@ -20,8 +20,8 @@ public class FichaCompletaEleicaoDtoResposta {
 
     private Long id;
     private String nome;
-    private LocalDate inicio;
-    private LocalDate fim;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
     private List<CandidatoEntidade> candidato;
     private String criadoPor;
     private LocalDateTime criadoData;

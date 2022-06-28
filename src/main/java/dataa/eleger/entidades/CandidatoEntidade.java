@@ -20,7 +20,8 @@ public class CandidatoEntidade {
     @Column(nullable = false)
     private String nomeCandidato;
 
-    @OneToOne(mappedBy = "candidato")
+    @OneToOne
+    @JoinColumn(name = "id_cargo")
     private CargoEntidade cargoEntidade;
 
     @Column(nullable = false)

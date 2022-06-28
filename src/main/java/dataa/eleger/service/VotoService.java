@@ -2,6 +2,8 @@ package dataa.eleger.service;
 
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.entidades.VotoEntidade;
+import dataa.eleger.modelos.itensDeVoto.ItensDeVotoDtoRequisicao;
+import dataa.eleger.modelos.itensDeVoto.ItensDeVotoDtoResposta;
 import dataa.eleger.modelos.voto.VotoDtoRequisicao;
 import dataa.eleger.modelos.voto.VotoDtoResposta;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public interface VotoService {
 
     List<VotoDtoResposta> ListarTodosOsVotos();
 
-    VotoDtoResposta salvaCandidatoVotado(Long voto, Long candidato);
+    ItensDeVotoDtoResposta salvaCandidatoVotado(ItensDeVotoDtoRequisicao itensDeVotoDtoRequisicao);
 
     VotoEntidade buscarVoto(Long id) throws NaoEncontrado;
 }

@@ -8,6 +8,7 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -21,9 +22,9 @@ public class EleicaoDtoRequisicao {
     @NotNull(message = "Descrição do Processo de eleição não pode ser nulo")
     private String nome;
 
-    private LocalDate inicio;
+    private LocalDateTime inicio;
 
-    private LocalDate fim;
+    private LocalDateTime fim;
 
     public EleicaoEntidade novaEleicao() {
         return new EleicaoEntidade(nome, inicio, fim);

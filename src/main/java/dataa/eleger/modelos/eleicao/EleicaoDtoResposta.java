@@ -4,6 +4,7 @@ import dataa.eleger.entidades.EleicaoEntidade;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -13,8 +14,8 @@ import java.time.LocalDate;
 public class EleicaoDtoResposta {
 
     private String nome;
-    private LocalDate inicio;
-    private LocalDate fim;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
 
     public EleicaoDtoResposta(EleicaoEntidade eleicaoEntidade) {
         this.setNome(eleicaoEntidade.getNome());

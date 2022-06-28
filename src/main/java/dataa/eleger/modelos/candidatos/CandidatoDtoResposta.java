@@ -14,24 +14,18 @@ import java.time.LocalDateTime;
 public class CandidatoDtoResposta {
 
     private Long idCandidato;
-    private String nomeCandidato;
-    private CargoEntidade cargoEntidade;
+    private String candidato;
+    private String cargo;
     private String foto;
-
-    private String criadoPor;
-    private LocalDateTime criadoData;
-    private String modificadoPor;
-    private LocalDateTime modificadoData;
 
 
     public CandidatoDtoResposta(CandidatoEntidade candidatoEntidade) {
+
+
         this.setIdCandidato(candidatoEntidade.getIdCandidato());
-        this.setNomeCandidato(candidatoEntidade.getNomeCandidato());
-        this.setCargoEntidade(candidatoEntidade.getCargoEntidade());
+        this.setCandidato(candidatoEntidade.getNomeCandidato());
+        this.setCargo(candidatoEntidade.getCargoEntidade().getNomeCargo());
         this.setFoto(candidatoEntidade.getFoto());
-        this.setCriadoPor(candidatoEntidade.getCriadoPor());
-        this.setCriadoData(candidatoEntidade.getCriadoData());
-        this.setModificadoPor(candidatoEntidade.getModificadoPor());
-        this.setModificadoData(candidatoEntidade.getModificadoData());
+
     }
 }

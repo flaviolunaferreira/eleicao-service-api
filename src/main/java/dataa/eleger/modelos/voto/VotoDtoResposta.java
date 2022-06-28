@@ -1,10 +1,12 @@
 package dataa.eleger.modelos.voto;
 
 
+import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.ItensDoVoto;
 import dataa.eleger.entidades.VotoEntidade;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter

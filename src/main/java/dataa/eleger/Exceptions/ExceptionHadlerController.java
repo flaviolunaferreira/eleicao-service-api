@@ -34,10 +34,21 @@ public class ExceptionHadlerController {
 	public ResponseEntity<StandardError> valorDuplicado(ValorDuplicado e, ServletRequest request) {
 		StandardError error = new StandardError (
 				System.currentTimeMillis(),
-				HttpStatus.NOT_FOUND.value(),
+				HttpStatus.NOT_ACCEPTABLE.value(),
 				e.getMessage()
 		);
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+	}
+
+	@ExceptionHandler(ViolacaoDeRegra.class)
+	public ResponseEntity<StandardError> violacaoDeRegrra(ValorDuplicado e, ServletRequest request) {
+		StandardError error = new StandardError (
+				System.currentTimeMillis(),
+				HttpStatus.NOT_ACCEPTABLE.value(),
+
+				e.getMessage()
+		);
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
 	}
 
 }

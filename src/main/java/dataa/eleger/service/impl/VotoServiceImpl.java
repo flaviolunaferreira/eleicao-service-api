@@ -1,9 +1,10 @@
 package dataa.eleger.service.impl;
 
 import dataa.eleger.Exceptions.NaoEncontrado;
-import dataa.eleger.entidades.CandidatoEntidade;
-import dataa.eleger.entidades.ItensDoVoto;
-import dataa.eleger.entidades.VotoEntidade;
+import dataa.eleger.Exceptions.ViolacaoDeRegra;
+import dataa.eleger.entidades.*;
+import dataa.eleger.modelos.itensDeVoto.ItensDeVotoDtoRequisicao;
+import dataa.eleger.modelos.itensDeVoto.ItensDeVotoDtoResposta;
 import dataa.eleger.modelos.voto.VotoDtoRequisicao;
 import dataa.eleger.modelos.voto.VotoDtoResposta;
 import dataa.eleger.repositorios.*;
@@ -11,6 +12,7 @@ import dataa.eleger.service.VotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -36,10 +38,33 @@ public class VotoServiceImpl implements VotoService {
     }
 
     @Override
-    public VotoDtoResposta novoVoto(VotoDtoRequisicao votoDtoRequisicao) {
-        return new VotoDtoResposta(
-                votoRepositorio.save(votoDtoRequisicao.novoVoto(eleicaoRepositorio, usuarioRepositorio)));
+    public VotoDtoResposta novoVoto(VotoDtoRequisicao votoDtoRequisicao) throws ViolacaoDeRegra {
+
+        EleicaoEntidade eleicao = eleicaoRepositorio.findById(votoDtoRequisicao.getEleicao())
+                .orElseThrow(() -> new NaoEncontrado("Nao encontrei o cadastro da Eleiçao." + votoDtoRequisicao.getEleicao()));
+
+        if (eleicao.getInicio().isBefore(LocalDateTime.now())
+                && eleicao.getFim().isAfter(LocalDateTime.now())) {
+
+            UsuarioEntidade usuario = usuarioRepositorio.findById(votoDtoRequisicao.getUsuario())
+                    .orElseThrow(() -> new NaoEncontrado("Desculpe mas não encontrei o Usuário com id: " + votoDtoRequisicao.getUsuario()));
+
+            List<VotoEntidade> seEleitorJaVotou = votoRepositorio.procurarPorEleicaoAndUsuario(votoDtoRequisicao.getEleicao(),
+                    votoDtoRequisicao.getUsuario());
+
+            if (seEleitorJaVotou.isEmpty()) {
+                return new VotoDtoResposta(
+                    votoRepositorio.save(votoDtoRequisicao.novoVoto(eleicaoRepositorio, usuarioRepositorio)));
+
+            }
+            throw new ViolacaoDeRegra("Já tenho o Voto deste Eleitor nesta Campanha!!!");
+        }
+
+        throw new ViolacaoDeRegra("Não consegui salvar... " +
+                "Verifique se a Data do Voto estar entre a data inicial e final da Eleição.");
+
     }
+
 
     @Override
     public List<VotoDtoResposta> ListarTodosOsVotos() {
@@ -48,22 +73,36 @@ public class VotoServiceImpl implements VotoService {
     }
 
     @Override
-    public VotoDtoResposta salvaCandidatoVotado(Long voto, Long candidato) {
-        VotoEntidade votoEntidade = buscarVoto(voto);
-        CandidatoEntidade candidatoEntidade = buscarCandidato(candidato);
+    public ItensDeVotoDtoResposta salvaCandidatoVotado(ItensDeVotoDtoRequisicao voto) throws ViolacaoDeRegra {
+
+        // verificar se o voto existe
+        VotoEntidade votoEntidade = buscarVoto(voto.getVotoEntidade());
+        // Ver todos os candidatos cadastrado nesta eleiçao
         List<CandidatoEntidade> candidatosPossiveis = votoEntidade.getEleicaoEntidade().getCandidato();
 
-        if (candidatosPossiveis.contains(candidatoEntidade)) {
-            List<ItensDoVoto> itens = votoEntidade.getItensDoVoto();
-            ItensDoVoto salvarVoto = new ItensDoVoto(candidatoEntidade);
-            itens.add(itensDoVotoRepositorio.save(salvarVoto));
-            votoEntidade.setItensDoVoto(itens);
-            return new VotoDtoResposta(votoRepositorio.save(votoEntidade));
+        System.out.println("quantidade de candidatos desta eleição -> " + candidatosPossiveis.size());
+
+        // candidato a receber o voto.
+        CandidatoEntidade candidatoEntidade = buscarCandidato(voto.getCandidatoEntidade());
+
+        // candidatos já votados
+        List<ItensDoVoto> itensDeVotos = votoEntidade.getItensDoVoto();
+
+        // verificar se o candidato ou seu cargo ja foi votado.
+        for(ItensDoVoto item : itensDeVotos) {
+            if (item.getCandidatoEntidade().getCargoEntidade().getIdCargo()
+                    .equals(candidatoEntidade.getCargoEntidade().getIdCargo()))
+                throw new ViolacaoDeRegra("Ja tenho um candidato votado para este cargo");
+            if (item.getCandidatoEntidade().getIdCandidato().equals(candidatoEntidade.getIdCandidato()))
+                throw new ViolacaoDeRegra("Esse candidato ja foi Votado.");
         }
-        return null;
+
+        //caso de tudo certo
+        if (candidatosPossiveis.size() > itensDeVotos.size()) {
+            return new ItensDeVotoDtoResposta(itensDoVotoRepositorio.save(voto.novoItemDoVoto(candidatoRepositorio, votoRepositorio)));
+        }
+        throw new ViolacaoDeRegra("Verifique a quantidade de Votos!");
     }
-
-
 
     public VotoEntidade buscarVoto(Long voto) throws NaoEncontrado {
         Optional<VotoEntidade> votoEntidade = votoRepositorio.findById(voto);
