@@ -3,6 +3,7 @@ package dataa.eleger.controladores;
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
+import dataa.eleger.Exceptions.ViolacaoDeRegra;
 import dataa.eleger.modelos.eleicao.FichaCompletaEleicaoDtoResposta;
 import dataa.eleger.modelos.eleicao.EleicaoDtoRequisicao;
 import dataa.eleger.modelos.eleicao.EleicaoDtoResposta;
@@ -20,8 +21,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasRole('ADMINISTRADOR')")
 @RequestMapping("/api/v1/eleicao")
+@PreAuthorize("hasRole('ADMINISTRADOR')")
 public class EleicaoControle {
 
 
@@ -42,10 +43,9 @@ public class EleicaoControle {
      ***********************************************************************************/
     @ApiOperation(value = "Cadastra uma nova eleição", notes = "inclui uma nova eleição no banco de dados")
     @PostMapping("/")
-    public ResponseEntity<EleicaoEntidade> novaEleicao(@RequestBody @Validated EleicaoDtoRequisicao eleicaoDtoRequisicao) {
-
+    public ResponseEntity<EleicaoEntidade> novaEleicao(@RequestBody @Validated EleicaoDtoRequisicao eleicaoDtoRequisicao) throws ViolacaoDeRegra {
         // usando a classe dto para mapear a resposta do método.
-        return new ResponseEntity<>(eleicaoService.novaEleicao(eleicaoDtoRequisicao), HttpStatus.CREATED);
+        return ResponseEntity.ok().body(eleicaoService.novaEleicao(eleicaoDtoRequisicao));
     }
 
 

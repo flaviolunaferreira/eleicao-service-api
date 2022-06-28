@@ -26,7 +26,7 @@ public class UsuarioDtoResposta {
     private LocalDateTime modificadoData;
 
     public UsuarioDtoResposta(UsuarioEntidade usuarioEntidade) {
-        this.setId(usuarioEntidade.getId());
+        this.setId(usuarioEntidade.getIdUsuario());
         this.setNome(usuarioEntidade.getNome());
         this.setEmail(usuarioEntidade.getEmail());
         this.setCpf(usuarioEntidade.getCpf());

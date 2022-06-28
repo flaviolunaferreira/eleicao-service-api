@@ -1,7 +1,8 @@
 package dataa.eleger.controladores;
 
 import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.entidades.UsuarioEntidade;
+import dataa.eleger.modelos.permissoes.PermissaoDtoRequest;
+import dataa.eleger.modelos.permissoes.PermissaoDtoResposta;
 import dataa.eleger.modelos.usuario.UsuarioDtoRequisicao;
 import dataa.eleger.modelos.usuario.UsuarioDtoResposta;
 import dataa.eleger.service.UsuarioService;
@@ -9,14 +10,15 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
+//@PreAuthorize("hasRole('ADMINISTRADOR')")
 public class UsuarioControle {
 
     private final UsuarioService usuarioService;
@@ -45,12 +47,12 @@ public class UsuarioControle {
 
     /**
      * Atenção... na vida real as informações do usuário devem vir atravéz do body encriptografado...
-     * evitando interceptação de dados.
+     * evitando interceptação de dados mas enfim....
      * @param usuario
      * @param senha
      * @return boolean
      */
-    @ApiOperation(value = "Valida informações de login", notes = "Valida informações de login de um funcionário já cadastrado")
+    @ApiOperation(value = "Valida informações de login", notes = "Valida informações de login de um usuário já cadastrado")
     @GetMapping("/login")
     public ResponseEntity<Boolean> validarUsuario(@RequestParam String usuario,
                                                   @RequestParam String senha) {
@@ -62,16 +64,6 @@ public class UsuarioControle {
 
         return  ResponseEntity.status(status).body(resultado);
 
-    }
-
-
-    @ApiOperation(value = "Adiciona permissão ao usuário", notes = "Inclui uma nova permissão ao usuário.")
-    @PutMapping("/permissao/usuario/{usuario}/permissao/{permissao}")
-    public ResponseEntity<UsuarioDtoResposta> incluirPermmissao(@PathVariable Long usuario,
-                                                                @PathVariable Long permissao)
-                                                                throws ValorDuplicado {
-        UsuarioDtoResposta resultado = usuarioService.IncluiPermissao(usuario, permissao);
-        return ResponseEntity.ok().body(resultado);
     }
 
 }

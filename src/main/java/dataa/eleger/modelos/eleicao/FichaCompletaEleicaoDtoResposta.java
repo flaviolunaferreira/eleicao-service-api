@@ -2,6 +2,7 @@ package dataa.eleger.modelos.eleicao;
 
 import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.EleicaoEntidade;
+import dataa.eleger.entidades.VotoEntidade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,8 @@ public class FichaCompletaEleicaoDtoResposta {
 
     private Long id;
     private String nome;
-    private LocalDate inicio;
-    private LocalDate fim;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
     private List<CandidatoEntidade> candidato;
     private String criadoPor;
     private LocalDateTime criadoData;

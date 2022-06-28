@@ -24,22 +24,25 @@ public class EleicaoEntidade {
     private String nome;
 
     @Column(nullable = false)
-    private LocalDate inicio;
+    private LocalDateTime inicio;
 
     @Column(nullable = false)
-    private LocalDate fim;
+    private LocalDateTime fim;
 
     @OneToMany
     @JoinColumn(name = "Candidato_idCandidato")
     private List<CandidatoEntidade> candidato = new ArrayList<>();
-    
+
+    @OneToMany(mappedBy = "eleicaoEntidade")
+    private List<VotoEntidade>  votosEntidade;
+
     private String criadoPor = System.getProperty("user.name");
     private LocalDateTime criadoData = LocalDateTime.now();
     private String modificadoPor = System.getProperty("user.name");
     private LocalDateTime modificadoData = LocalDateTime.now();
 
 
-    public EleicaoEntidade(String nome, LocalDate inicio, LocalDate fim) {
+    public EleicaoEntidade(String nome, LocalDateTime inicio, LocalDateTime fim) {
         this.nome = nome;
         this.inicio = inicio;
         this.fim = fim;

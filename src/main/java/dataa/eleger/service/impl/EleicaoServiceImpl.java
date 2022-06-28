@@ -3,6 +3,7 @@ package dataa.eleger.service.impl;
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
+import dataa.eleger.Exceptions.ViolacaoDeRegra;
 import dataa.eleger.modelos.eleicao.EleicaoDtoRequisicao;
 import dataa.eleger.modelos.eleicao.EleicaoDtoResposta;
 import dataa.eleger.modelos.eleicao.FichaCompletaEleicaoDtoResposta;
@@ -48,13 +49,19 @@ public class EleicaoServiceImpl implements EleicaoService {
      * @return entidade salva.
      *************************************************************************/
     @Override
-    public EleicaoEntidade novaEleicao(EleicaoDtoRequisicao eleicaoDtoRequisicao) {
+    public EleicaoEntidade novaEleicao(EleicaoDtoRequisicao eleicaoDtoRequisicao) throws ViolacaoDeRegra {
 
-        // usando a classe Dto para retornar as informações que preciso para o cadástro
-        EleicaoEntidade result = eleicaoDtoRequisicao.novaEleicao();
+        // validando que a data de inicio e antes da data final
+        if ( eleicaoDtoRequisicao.getInicio().isBefore(eleicaoDtoRequisicao.getFim())) {
 
-        //salvando e retornando valor salvo
-        return eleicaoRepositorio.save(result);
+            // usando a classe Dto para retornar as informações que preciso para o cadástro
+            EleicaoEntidade result = eleicaoDtoRequisicao.novaEleicao();
+
+            //salvando e retornando valor salvo
+            return eleicaoRepositorio.save(result);
+
+        }
+        throw( new ViolacaoDeRegra("Nao consigo salvar esta eleiçao... por favor verifique a data Digitada!"));
     }
 
 
@@ -188,7 +195,7 @@ public class EleicaoServiceImpl implements EleicaoService {
     /**************************************************************************
      * criando método buscar por id para usar em outros serviços
      *************************************************************************/
-    private EleicaoEntidade buscaPorId(Long id) throws NaoEncontrado {
+    public EleicaoEntidade buscaPorId(Long id) throws NaoEncontrado {
 
         // mandando uma resposta mais amigável para o front
         return eleicaoRepositorio.findById(id).orElseThrow(

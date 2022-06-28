@@ -24,7 +24,7 @@ public class ConfiguracoesDeSeguranca extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/swagger/**", "/h2/**", "/h2-console/**").permitAll()
+                .antMatchers("/swagger/**").permitAll()
                 .and()
                 .httpBasic();
     }
@@ -32,5 +32,10 @@ public class ConfiguracoesDeSeguranca extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(detalhesDoServicoUsuario).passwordEncoder(encoder());
+
+        auth.inMemoryAuthentication()
+                .withUser("Data")
+                .password(encoder().encode("data"))
+                .roles("ELEITOR", "ADMINISTRADOR");
     }
 }

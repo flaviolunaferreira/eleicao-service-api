@@ -1,5 +1,6 @@
 package dataa.eleger.service.impl;
 
+import dataa.eleger.Exceptions.ValorDuplicado;
 import dataa.eleger.Exceptions.ViolacaoDeIntegridade;
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.modelos.candidatos.CandidatoDtoRequest;
@@ -36,9 +37,11 @@ public class CandidatoServiceImpl implements CandidatoService {
      * @return ficha completa do candidato com detalhes do cargo almejado.
      *************************************************************************/
     @Override
-    public CandidatoDtoResposta salvarNovoCandidato(CandidatoDtoRequest candidatoDtoRequest) {
-
+    public CandidatoDtoResposta salvarNovoCandidato(CandidatoDtoRequest candidatoDtoRequest) throws ValorDuplicado {
+        List<CandidatoEntidade> candidato = candidatoRepositorio.findByNomeCandidatoContainingIgnoreCase(candidatoDtoRequest.getNomeCandidato());
         CandidatoEntidade resultado = candidatoDtoRequest.newCandidato(cargoRepositorio);
+        if (candidatoDtoRequest.getNomeCandidato().equalsIgnoreCase(candidato.get(0).getNomeCandidato()))
+            throw( new ValorDuplicado("Sinto Muito... Já tenho um Candidato com esse nome."));
         return new CandidatoDtoResposta(candidatoRepositorio.save(resultado));
     }
 
@@ -101,10 +104,9 @@ public class CandidatoServiceImpl implements CandidatoService {
      * @param id
      */
     @Override
-    public void apagarCandidato(Long id) {
-        CandidatoEntidade resultado = buscarPorId(id);
+    public void apagarCandidato(Long id) throws ViolacaoDeIntegridade{
         try {
-            candidatoRepositorio.delete(resultado);
+            candidatoRepositorio.deleteById(id);
         } catch(Exception e) {
             throw new ViolacaoDeIntegridade("Não foi possível apagar o candidato, existem chaves de relacionamento pendentes. " + e);
         }
