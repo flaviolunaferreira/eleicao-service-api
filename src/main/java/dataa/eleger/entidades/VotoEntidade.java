@@ -1,5 +1,6 @@
 package dataa.eleger.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Entity
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class VotoEntidade {
@@ -19,14 +21,17 @@ public class VotoEntidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVoto;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "idUsuario")
     private UsuarioEntidade usuario;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idEleicao")
     private EleicaoEntidade eleicaoEntidade;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "votoEntidade")
     private List<ItensDoVoto> itensDoVoto = new ArrayList<>();
 
