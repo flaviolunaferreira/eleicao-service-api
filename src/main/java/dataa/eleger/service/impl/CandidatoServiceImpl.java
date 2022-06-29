@@ -40,7 +40,7 @@ public class CandidatoServiceImpl implements CandidatoService {
     public CandidatoDtoResposta salvarNovoCandidato(CandidatoDtoRequest candidatoDtoRequest) throws ValorDuplicado {
         List<CandidatoEntidade> candidato = candidatoRepositorio.findByNomeCandidatoContainingIgnoreCase(candidatoDtoRequest.getNomeCandidato());
         CandidatoEntidade resultado = candidatoDtoRequest.newCandidato(cargoRepositorio);
-        if (candidatoDtoRequest.getNomeCandidato().equalsIgnoreCase(candidato.get(0).getNomeCandidato()))
+        if (!candidato.isEmpty())
             throw( new ValorDuplicado("Sinto Muito... Já tenho um Candidato com esse nome."));
         return new CandidatoDtoResposta(candidatoRepositorio.save(resultado));
     }

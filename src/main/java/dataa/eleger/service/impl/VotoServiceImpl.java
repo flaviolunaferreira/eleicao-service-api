@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -77,8 +78,11 @@ public class VotoServiceImpl implements VotoService {
 
         // verificar se o voto existe
         VotoEntidade votoEntidade = buscarVoto(voto.getVotoEntidade());
+        System.out.println("voto ativo -> " + votoEntidade);
         // Ver todos os candidatos cadastrado nesta eleiçao
         List<CandidatoEntidade> candidatosPossiveis = votoEntidade.getEleicaoEntidade().getCandidato();
+
+        System.out.println("candidatos para essa eleição -> " + candidatosPossiveis);
 
         System.out.println("quantidade de candidatos desta eleição -> " + candidatosPossiveis.size());
 
@@ -97,11 +101,21 @@ public class VotoServiceImpl implements VotoService {
                 throw new ViolacaoDeRegra("Esse candidato ja foi Votado.");
         }
 
-        //caso de tudo certo
-        if (candidatosPossiveis.size() > itensDeVotos.size()) {
+        //caso de tudo certo, Verificar se a quantidade de votos é compatível com os cargos cadastrados para essa eleição.
+        List<String> cargosElegiveis = new ArrayList<>();
+
+        for(CandidatoEntidade item : candidatosPossiveis) {
+            cargosElegiveis.add(item.getCargoEntidade().getNomeCargo());
+            System.out.println(cargosElegiveis);
+        }
+
+        int numeroDeCargos = cargosElegiveis.stream().distinct().collect(Collectors.toList()).size();
+        System.out.println(numeroDeCargos);
+
+        if (itensDeVotos.size() < numeroDeCargos) {
             return new ItensDeVotoDtoResposta(itensDoVotoRepositorio.save(voto.novoItemDoVoto(candidatoRepositorio, votoRepositorio)));
         }
-        throw new ViolacaoDeRegra("Verifique a quantidade de Votos!");
+        throw new ViolacaoDeRegra("Verifique a quantidade de Votos. temos " + numeroDeCargos + " Cargos e a mesma quantidade de votos!");
     }
 
     public VotoEntidade buscarVoto(Long voto) throws NaoEncontrado {
