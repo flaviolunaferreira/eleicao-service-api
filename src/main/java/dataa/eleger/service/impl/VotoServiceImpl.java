@@ -54,6 +54,7 @@ public class VotoServiceImpl implements VotoService {
                     votoDtoRequisicao.getUsuario());
 
             if (seEleitorJaVotou.isEmpty()) {
+
                 return new VotoDtoResposta(
                     votoRepositorio.save(votoDtoRequisicao.novoVoto(eleicaoRepositorio, usuarioRepositorio)));
 
