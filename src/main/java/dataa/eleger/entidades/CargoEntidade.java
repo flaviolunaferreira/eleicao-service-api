@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CargoEntidade {
