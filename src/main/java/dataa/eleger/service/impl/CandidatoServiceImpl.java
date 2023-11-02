@@ -9,7 +9,6 @@ import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.repositorios.CandidatoRepositorio;
 import dataa.eleger.repositorios.CargoRepositorio;
 import dataa.eleger.service.CandidatoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,7 @@ public class CandidatoServiceImpl implements CandidatoService {
     private final CandidatoRepositorio candidatoRepositorio;
     private final CargoRepositorio cargoRepositorio;
 
-    @Autowired
-    public CandidatoServiceImpl(CandidatoRepositorio candidatoRepositorio, CargoRepositorio cargoRepositorio, CargoRepositorio cargoRepositorio1) {
+        public CandidatoServiceImpl(CandidatoRepositorio candidatoRepositorio, CargoRepositorio cargoRepositorio, CargoRepositorio cargoRepositorio1) {
         this.candidatoRepositorio = candidatoRepositorio;
         this.cargoRepositorio = cargoRepositorio;
     }

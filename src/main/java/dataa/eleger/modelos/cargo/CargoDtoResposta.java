@@ -3,7 +3,6 @@ package dataa.eleger.modelos.cargo;
 import dataa.eleger.entidades.CargoEntidade;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 @Setter
 @Getter

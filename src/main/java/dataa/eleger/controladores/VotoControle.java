@@ -6,7 +6,6 @@ import dataa.eleger.modelos.voto.VotoDtoRequisicao;
 import dataa.eleger.modelos.voto.VotoDtoResposta;
 import dataa.eleger.service.VotoService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ public class VotoControle {
 
     private final VotoService votoService;
 
-    @Autowired
     public VotoControle(VotoService votoService) {
         this.votoService = votoService;
     }

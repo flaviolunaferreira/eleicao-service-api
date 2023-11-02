@@ -1,6 +1,5 @@
 package dataa.eleger.repositorios;
 
-import dataa.eleger.entidades.CandidatoEntidade;
 import dataa.eleger.entidades.EleicaoEntidade;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

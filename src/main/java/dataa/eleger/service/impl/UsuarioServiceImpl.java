@@ -2,20 +2,15 @@ package dataa.eleger.service.impl;
 
 import dataa.eleger.Exceptions.NaoEncontrado;
 import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.entidades.PermissoesEntidade;
 import dataa.eleger.entidades.UsuarioEntidade;
 import dataa.eleger.modelos.usuario.UsuarioDtoRequisicao;
 import dataa.eleger.modelos.usuario.UsuarioDtoResposta;
 import dataa.eleger.repositorios.UsuarioRepositorio;
-import dataa.eleger.service.PermissaoService;
 import dataa.eleger.service.UsuarioService;
 import dataa.eleger.uteis.Cpf;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,17 +21,14 @@ import java.util.stream.Collectors;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepositorio usuarioRepositorio;
-    private final PermissaoService permissaoService;
 
     private BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
     private final Cpf cpf;
 
-    @Autowired
-    public UsuarioServiceImpl(UsuarioRepositorio usuarioRepositorio, PermissaoService permissaoService, Cpf cpf) {
+    public UsuarioServiceImpl(UsuarioRepositorio usuarioRepositorio, Cpf cpf) {
         this.usuarioRepositorio = usuarioRepositorio;
-        this.permissaoService = permissaoService;
         this.cpf = cpf;
     }
 

@@ -6,7 +6,6 @@ import dataa.eleger.modelos.cargo.CargoDtoRequisicao;
 import dataa.eleger.modelos.cargo.CargoDtoResposta;
 import dataa.eleger.service.CargoService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +21,6 @@ public class CargoControle {
 
     private final CargoService cargoService;
 
-    @Autowired
     public CargoControle(CargoService cargoService) {
         this.cargoService = cargoService;
     }

@@ -1,6 +1,5 @@
 package dataa.eleger.configuracoes;
 
-import dataa.eleger.entidades.PermissoesEntidade;
 import dataa.eleger.entidades.UsuarioEntidade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -12,7 +12,6 @@ import dataa.eleger.entidades.EleicaoEntidade;
 import dataa.eleger.repositorios.EleicaoRepositorio;
 import dataa.eleger.service.CandidatoService;
 import dataa.eleger.service.EleicaoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,6 @@ public class EleicaoServiceImpl implements EleicaoService {
     private final CandidatoService candidatoService;
 
     // injetando dependencia
-    @Autowired
     public EleicaoServiceImpl(EleicaoRepositorio eleicaoRepositorio, CandidatoService candidatoService) {
         this.eleicaoRepositorio = eleicaoRepositorio;
         this.candidatoService = candidatoService;
@@ -152,7 +150,7 @@ public class EleicaoServiceImpl implements EleicaoService {
     public void apagaEleicao(Long id) throws ViolacaoDeIntegridade {
 
         // buscando registro
-        EleicaoEntidade result = buscaPorId(id);
+        buscaPorId(id);
 
         // se der tudo certo ele apaga
         try {

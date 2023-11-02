@@ -26,7 +26,7 @@ Sua Versao de IDE devem suportar o Java 11 — i.e. Eclipse (>= 2018-09), Intell
 
 Voce pricesa instalar o Lombok na sua IDE.
 
-Swagger-UI voce pode fazer testes na URL http://localhost:8080/swagger-ui/
+Swagger-UI voce pode fazer testes na URL http://localhost:8080/swagger-ui.html
 Nota: Algumas rotas precisam de autorizaçao
 
 API docs podem ser acessadas em URL http://localhost:8080/v2/api-docs

@@ -3,7 +3,6 @@ package dataa.eleger.modelos.eleicao;
 import dataa.eleger.entidades.EleicaoEntidade;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Setter

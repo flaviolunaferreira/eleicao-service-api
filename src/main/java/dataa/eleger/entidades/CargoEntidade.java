@@ -1,6 +1,5 @@
 package dataa.eleger.entidades;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;

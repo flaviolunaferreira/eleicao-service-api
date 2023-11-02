@@ -4,9 +4,7 @@ import dataa.eleger.modelos.permissoes.PermissaoDtoRequest;
 import dataa.eleger.modelos.permissoes.PermissaoDtoResposta;
 import dataa.eleger.service.PermissaoService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,6 @@ public class PermissaoControle {
 
     private final PermissaoService permissaoService;
 
-    @Autowired
     public PermissaoControle(PermissaoService permissaoService) {
         this.permissaoService = permissaoService;
     }

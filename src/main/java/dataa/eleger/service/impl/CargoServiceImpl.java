@@ -8,7 +8,6 @@ import dataa.eleger.modelos.cargo.CargoDtoResposta;
 import dataa.eleger.entidades.CargoEntidade;
 import dataa.eleger.repositorios.CargoRepositorio;
 import dataa.eleger.service.CargoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ public class CargoServiceImpl implements CargoService {
 
     private final CargoRepositorio cargoRepositorio;
 
-    @Autowired
     public CargoServiceImpl(CargoRepositorio cargoRepositorio) {
         this.cargoRepositorio = cargoRepositorio;
     }

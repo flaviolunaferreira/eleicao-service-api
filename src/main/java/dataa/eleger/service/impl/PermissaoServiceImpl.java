@@ -9,7 +9,6 @@ import dataa.eleger.modelos.permissoes.PermissaoDtoResposta;
 import dataa.eleger.repositorios.PermissaoRepositorio;
 import dataa.eleger.repositorios.UsuarioRepositorio;
 import dataa.eleger.service.PermissaoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +21,6 @@ public class PermissaoServiceImpl implements PermissaoService {
     private final PermissaoRepositorio permissaoRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
 
-    @Autowired
     public PermissaoServiceImpl(PermissaoRepositorio permissaoRepositorio, UsuarioRepositorio usuarioRepositorio) {
         this.permissaoRepositorio = permissaoRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;

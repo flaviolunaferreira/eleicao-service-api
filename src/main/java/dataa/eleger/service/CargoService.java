@@ -8,7 +8,6 @@ import dataa.eleger.modelos.cargo.CargoDtoResposta;
 import dataa.eleger.entidades.CargoEntidade;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service

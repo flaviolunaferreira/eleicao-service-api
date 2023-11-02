@@ -9,27 +9,23 @@ import dataa.eleger.modelos.voto.VotoDtoRequisicao;
 import dataa.eleger.modelos.voto.VotoDtoResposta;
 import dataa.eleger.repositorios.*;
 import dataa.eleger.service.VotoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class VotoServiceImpl implements VotoService {
 
-    private final static Logger LOGGER   = Logger.getLogger(VotoServiceImpl.class.getName());
     private final VotoRepositorio votoRepositorio;
     private final EleicaoRepositorio eleicaoRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
     private final CandidatoRepositorio candidatoRepositorio;
     private final ItensDoVotoRepositorio itensDoVotoRepositorio;
 
-    @Autowired
     public VotoServiceImpl(VotoRepositorio votoRepositorio, EleicaoRepositorio eleicaoRepositorio, UsuarioRepositorio usuarioRepositorio, CandidatoRepositorio candidatoRepositorio, ItensDoVotoRepositorio itensDoVotoRepositorio) {
         this.votoRepositorio = votoRepositorio;
         this.eleicaoRepositorio = eleicaoRepositorio;
@@ -47,7 +43,7 @@ public class VotoServiceImpl implements VotoService {
         if (eleicao.getInicio().isBefore(LocalDateTime.now())
                 && eleicao.getFim().isAfter(LocalDateTime.now())) {
 
-            UsuarioEntidade usuario = usuarioRepositorio.findById(votoDtoRequisicao.getUsuario())
+            usuarioRepositorio.findById(votoDtoRequisicao.getUsuario())
                     .orElseThrow(() -> new NaoEncontrado("Desculpe mas não encontrei o Usuário com id: " + votoDtoRequisicao.getUsuario()));
 
             List<VotoEntidade> seEleitorJaVotou = votoRepositorio.procurarPorEleicaoAndUsuario(votoDtoRequisicao.getEleicao(),

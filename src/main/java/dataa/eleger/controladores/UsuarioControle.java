@@ -1,16 +1,11 @@
 package dataa.eleger.controladores;
 
-import dataa.eleger.Exceptions.ValorDuplicado;
-import dataa.eleger.modelos.permissoes.PermissaoDtoRequest;
-import dataa.eleger.modelos.permissoes.PermissaoDtoResposta;
 import dataa.eleger.modelos.usuario.UsuarioDtoRequisicao;
 import dataa.eleger.modelos.usuario.UsuarioDtoResposta;
 import dataa.eleger.service.UsuarioService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +18,6 @@ public class UsuarioControle {
 
     private final UsuarioService usuarioService;
 
-    @Autowired
     public UsuarioControle(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
